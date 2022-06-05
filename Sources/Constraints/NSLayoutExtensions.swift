@@ -10,13 +10,13 @@ import UIKit
 
 //MARK: - Activate
 
-extension NSLayoutConstraint {
+public extension NSLayoutConstraint {
     func activate() {
         self.isActive = true
     }
 }
 
-extension Array where Element: NSLayoutConstraint {
+public extension Array where Element: NSLayoutConstraint {
     func activate() {
         NSLayoutConstraint.activate(self)
     }
@@ -24,7 +24,7 @@ extension Array where Element: NSLayoutConstraint {
 
 //MARK: - Priority
 
-extension NSLayoutConstraint {
+public extension NSLayoutConstraint {
     func setPriority(_ val: Float) -> NSLayoutConstraint {
         self.priority = UILayoutPriority(rawValue: val)
         return self
@@ -36,7 +36,7 @@ extension NSLayoutConstraint {
     }
 }
 
-extension Collection where Element: NSLayoutConstraint {
+public extension Collection where Element: NSLayoutConstraint {
     
     func setPriority(_ val: Float) -> [NSLayoutConstraint] {
         self.map { $0.setPriority(val) }
@@ -47,13 +47,13 @@ extension Collection where Element: NSLayoutConstraint {
     }
 }
 
-extension UILayoutPriority {
+public extension UILayoutPriority {
     static let almostRequired = UILayoutPriority(rawValue: 999)
 }
 
 //MARK: - Auto Layout
 
-extension UIView {
+public extension UIView {
     func enableAutoLayout() {
         translatesAutoresizingMaskIntoConstraints = false
     }
