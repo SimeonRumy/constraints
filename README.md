@@ -44,7 +44,7 @@ An alternative way is to create an array of constraints instead.
 
 ```
 
-Using function builders offers minor g3 advantages.
+Using function builders offers 3 minor advantages.
 
 1. No need to keep track of commas. Can be annoying when adding a lot of constraints.
 2. The keyword 'Constraints' allows us to quickly find the constraints using Cmd+F.

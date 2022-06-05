@@ -7,13 +7,13 @@ import UIKit
 
 
 @resultBuilder
-struct ConstraintsBuilder {
-    static func buildBlock() -> [NSLayoutConstraint] { [] }
+public struct ConstraintsBuilder {
+    static public func buildBlock() -> [NSLayoutConstraint] { [] }
     
 }
 
 extension ConstraintsBuilder {
-    static func buildBlock(_ constraints: NSLayoutConstraint...) -> [NSLayoutConstraint] {
+    static public func buildBlock(_ constraints: NSLayoutConstraint...) -> [NSLayoutConstraint] {
         constraints
     }
 }
