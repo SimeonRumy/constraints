@@ -22,6 +22,7 @@ final class ConstraintsTests: XCTestCase {
         
         let constraints = Constraints {
             view.heightAnchor.constraint(equalTo: view2.heightAnchor, multiplier: 1)
+            
         }
         
         XCTAssertEqual(constraints.count, 1)
