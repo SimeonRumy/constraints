@@ -35,8 +35,8 @@ import UIKit
 @resultBuilder
 public struct ConstraintsBuilder {
     
-    typealias Expression = NSLayoutConstraint
-    typealias Component = [NSLayoutConstraint]
+    public typealias Expression = NSLayoutConstraint
+    public typealias Component = [NSLayoutConstraint]
     
     
     // Given an expression result, "lift" it into a Component.
@@ -50,7 +50,6 @@ public struct ConstraintsBuilder {
     static func buildExpression(_ expression: Component) -> Component {
         return expression
     }
-    
     
     // Build a combined result from a list of partial results by concatenating.
     static func buildBlock(_ children: Component...) -> Component {
@@ -81,7 +80,7 @@ public struct ConstraintsBuilder {
     
 }
 
-public func Constraints(@ConstraintsBuilder _ content: () -> [NSLayoutConstraint]) -> [NSLayoutConstraint] {
+public func Constraints(@ConstraintsBuilder _ content: () -> ConstraintsBuilder.Component) -> ConstraintsBuilder.Component {
     content()
 }
 
