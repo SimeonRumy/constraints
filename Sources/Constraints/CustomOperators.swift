@@ -36,7 +36,7 @@ public typealias XAxis = NSLayoutXAxisAnchor
 public typealias YAxis = NSLayoutYAxisAnchor
 public typealias Dimension = NSLayoutDimension
 
-typealias DimensionAnchorPair = AnchorPair<Dimension, Dimension>
+public typealias DimensionAnchorPair = AnchorPair<Dimension, Dimension>
 
 //MARK: - Layout Block
 
@@ -58,20 +58,20 @@ public struct LayoutBlock<A> {
 
 //MARK: - Constant Addition
 
-func +<A>(lhs: LayoutBlock<A>, rhs: CGFloat) -> LayoutBlock<A> {
+public func +<A>(lhs: LayoutBlock<A>, rhs: CGFloat) -> LayoutBlock<A> {
     var newBlock = LayoutBlock(block: lhs)
     newBlock.constant = newBlock.constant + rhs
     return newBlock
 }
 
 
-func -<A>(lhs: LayoutBlock<A>, rhs: CGFloat) -> LayoutBlock<A> {
+public func -<A>(lhs: LayoutBlock<A>, rhs: CGFloat) -> LayoutBlock<A> {
     var newBlock = LayoutBlock(block: lhs)
     newBlock.constant = newBlock.constant - rhs
     return newBlock
 }
 
-func +<A>(lhs: CGFloat, rhs: LayoutBlock<A>) -> LayoutBlock<A> {
+public func +<A>(lhs: CGFloat, rhs: LayoutBlock<A>) -> LayoutBlock<A> {
     return rhs + lhs
 }
 
@@ -79,70 +79,70 @@ func +<A>(lhs: CGFloat, rhs: LayoutBlock<A>) -> LayoutBlock<A> {
 
 //MARK: - Constant Multiplication
 
-func *<A>(lhs: LayoutBlock<A>, rhs: CGFloat) -> LayoutBlock<A> {
+public func *<A>(lhs: LayoutBlock<A>, rhs: CGFloat) -> LayoutBlock<A> {
     var newBlock = LayoutBlock(block: lhs)
     newBlock.multiplier = newBlock.multiplier * rhs
     return newBlock
 }
 
-func /<A>(lhs: LayoutBlock<A>, rhs: CGFloat) -> LayoutBlock<A> {
+public func /<A>(lhs: LayoutBlock<A>, rhs: CGFloat) -> LayoutBlock<A> {
     var newBlock = LayoutBlock(block: lhs)
     newBlock.multiplier = newBlock.multiplier / rhs
     return newBlock
 }
 
 
-func *<A>(lhs: CGFloat, rhs: LayoutBlock<A>) -> LayoutBlock<A> {
+public func *<A>(lhs: CGFloat, rhs: LayoutBlock<A>) -> LayoutBlock<A> {
     rhs * lhs
 }
 
-func /<A>(lhs: CGFloat, rhs: LayoutBlock<A>) -> LayoutBlock<A> {
+public func /<A>(lhs: CGFloat, rhs: LayoutBlock<A>) -> LayoutBlock<A> {
     rhs * lhs
 }
 
 //MARK: - Layout Blocks with Constant Dimensions
 
-func ==<A: Dimension>(lhs: LayoutBlock<A>, rhs: CGFloat) -> NSLayoutConstraint {
+public func ==<A: Dimension>(lhs: LayoutBlock<A>, rhs: CGFloat) -> NSLayoutConstraint {
     lhs.anchor.constraint(equalToConstant: rhs)
 }
 
-func >=<A: Dimension>(lhs: LayoutBlock<A>, rhs: CGFloat) -> NSLayoutConstraint {
+public func >=<A: Dimension>(lhs: LayoutBlock<A>, rhs: CGFloat) -> NSLayoutConstraint {
     lhs.anchor.constraint(greaterThanOrEqualToConstant: rhs)
 }
 
-func <=<A: Dimension>(lhs: LayoutBlock<A>, rhs: CGFloat) -> NSLayoutConstraint {
+public func <=<A: Dimension>(lhs: LayoutBlock<A>, rhs: CGFloat) -> NSLayoutConstraint {
     lhs.anchor.constraint(lessThanOrEqualToConstant: rhs)
 }
 
 
-func ==<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGFloat) -> [NSLayoutConstraint] {
+public func ==<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGFloat) -> [NSLayoutConstraint] {
     lhs.anchor.constraint(equalToConstant: rhs)
 }
 
-func >=<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGFloat) -> [NSLayoutConstraint] {
+public func >=<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGFloat) -> [NSLayoutConstraint] {
     lhs.anchor.constraint(greaterThanOrEqualToConstant: rhs)
 }
 
-func <=<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGFloat) -> [NSLayoutConstraint] {
+public func <=<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGFloat) -> [NSLayoutConstraint] {
     lhs.anchor.constraint(lessThanOrEqualToConstant: rhs)
 }
 
 
-func ==<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGSize) -> [NSLayoutConstraint] {
+public func ==<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGSize) -> [NSLayoutConstraint] {
     [
         lhs.anchor.anchor1.constraint(equalToConstant: rhs.width),
         lhs.anchor.anchor2.constraint(equalToConstant: rhs.height)
     ]
 }
 
-func >=<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGSize) -> [NSLayoutConstraint] {
+public func >=<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGSize) -> [NSLayoutConstraint] {
     [
         lhs.anchor.anchor1.constraint(greaterThanOrEqualToConstant: rhs.width),
         lhs.anchor.anchor2.constraint(greaterThanOrEqualToConstant: rhs.height)
     ]
 }
 
-func <=<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGSize) -> [NSLayoutConstraint] {
+public func <=<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGSize) -> [NSLayoutConstraint] {
     [
         lhs.anchor.anchor1.constraint(lessThanOrEqualToConstant: rhs.width),
         lhs.anchor.anchor2.constraint(lessThanOrEqualToConstant: rhs.height)
@@ -153,29 +153,29 @@ func <=<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGSize) -> [NSLayoutCo
 
 //MARK: - Layout Blocks with Layout Blocks
 
-func ==<A: LayoutAnchor>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> NSLayoutConstraint {
+public func ==<A: LayoutAnchor>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> NSLayoutConstraint {
     lhs.anchor.constraint(equalTo: rhs.anchor, multiplier: rhs.multiplier / lhs.multiplier, constant: rhs.constant - lhs.constant)
 }
 
-func >=<A: LayoutAnchor>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> NSLayoutConstraint {
+public func >=<A: LayoutAnchor>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> NSLayoutConstraint {
     lhs.anchor.constraint(greaterThanOrEqualTo: rhs.anchor, multiplier: rhs.multiplier / lhs.multiplier, constant: rhs.constant - lhs.constant)
 }
 
-func <=<A: LayoutAnchor>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> NSLayoutConstraint {
+public func <=<A: LayoutAnchor>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> NSLayoutConstraint {
     lhs.anchor.constraint(lessThanOrEqualTo: rhs.anchor, multiplier: rhs.multiplier / lhs.multiplier, constant: rhs.constant - lhs.constant)
 }
 
 // Anchor Pairs
 
-func ==<A: LayoutAnchors>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> [NSLayoutConstraint] {
+public func ==<A: LayoutAnchors>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> [NSLayoutConstraint] {
     lhs.anchor.constraint(equalTo: rhs.anchor, multiplier: rhs.multiplier / lhs.multiplier, constant: rhs.constant - lhs.constant)
 }
 
-func >=<A: LayoutAnchors>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> [NSLayoutConstraint] {
+public func >=<A: LayoutAnchors>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> [NSLayoutConstraint] {
     lhs.anchor.constraint(greaterThanOrEqualTo: rhs.anchor, multiplier: rhs.multiplier / lhs.multiplier, constant: rhs.constant - lhs.constant)
 }
 
-func <=<A: LayoutAnchors>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> [NSLayoutConstraint] {
+public func <=<A: LayoutAnchors>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> [NSLayoutConstraint] {
     lhs.anchor.constraint(lessThanOrEqualTo: rhs.anchor, multiplier: rhs.multiplier / lhs.multiplier, constant: rhs.constant - lhs.constant)
 }
 
