@@ -40,41 +40,45 @@ public struct ConstraintsBuilder {
     
     
     // Given an expression result, "lift" it into a Component.
-    static func buildExpression(_ expression: Expression?) -> Component {
+    static public func buildExpression(_ expression: Expression?) -> Component {
         if let expression {
             return [expression]
         }
         return []
     }
     
-    static func buildExpression(_ expression: Component) -> Component {
+    static public func buildExpression(_ expression: Component) -> Component {
+        return expression
+    }
+
+    static public func buildExpression(_ expression: Expression...) -> Component {
         return expression
     }
     
     // Build a combined result from a list of partial results by concatenating.
-    static func buildBlock(_ children: Component...) -> Component {
+    static public func buildBlock(_ children: Component...) -> Component {
         return children.flatMap { $0 }
     }
     
     // We can provide this overload as a micro-optimization for the common case
     // where there's only one partial result in a block.  This shows the flexibility
     // of using an ad-hoc builder pattern.
-    static func buildBlock(_ component: Component) -> Component {
+    static public func buildBlock(_ component: Component) -> Component {
         return component
     }
     
     // Handle optionality by turning nil into the empty list.
-    static func buildOptional(_ children: Component?) -> Component {
+    static public func buildOptional(_ children: Component?) -> Component {
         return children ?? []
     }
     
     // Handle optionally-executed blocks.
-    static func buildEither(first child: Component) -> Component {
+    static public func buildEither(first child: Component) -> Component {
         return child
     }
     
     // Handle optionally-executed blocks.
-    static func buildEither(second child: Component) -> Component {
+    static public func buildEither(second child: Component) -> Component {
         return child
     }
     

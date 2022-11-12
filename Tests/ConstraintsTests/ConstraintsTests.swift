@@ -24,7 +24,7 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import XCTest
-@testable import Constraints
+import Constraints
 
 final class ConstraintsTests: XCTestCase {
     
