@@ -50,10 +50,6 @@ public struct ConstraintsBuilder {
     static public func buildExpression(_ expression: Component) -> Component {
         return expression
     }
-
-    static public func buildExpression(_ expression: Expression...) -> Component {
-        return expression
-    }
     
     // Build a combined result from a list of partial results by concatenating.
     static public func buildBlock(_ children: Component...) -> Component {

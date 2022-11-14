@@ -26,14 +26,10 @@
 
 #if os(macOS)
 import Cocoa
-
 internal typealias View = NSView
-
 #else
 import UIKit
-
 internal typealias View = UIView
-
 #endif
 
 
@@ -49,14 +45,50 @@ public extension View {
     var height: LayoutBlock<Dimension> { LayoutBlock(anchor: self.heightAnchor) }
     var centerX: LayoutBlock<XAxis> { LayoutBlock(anchor: self.centerXAnchor) }
     var centerY: LayoutBlock<YAxis> { LayoutBlock(anchor: self.centerYAnchor) }
-    var baseline: LayoutBlock<YAxis> { LayoutBlock(anchor: self.lastBaselineAnchor) }
-    var size: LayoutBlock<AnchorPair<Dimension, Dimension>> { LayoutBlock(anchor: AnchorPair(anchor1: self.widthAnchor, anchor2: self.heightAnchor))}
-    var centerXY: LayoutBlock<AnchorPair<XAxis, YAxis>> { LayoutBlock(anchor: AnchorPair(anchor1: self.centerXAnchor, anchor2: self.centerYAnchor))}
-    
-    @available(iOS 8.0, OSX 10.11, *)
     var firstBaseline: LayoutBlock<YAxis> { LayoutBlock(anchor: self.firstBaselineAnchor) }
     var lastBaseline: LayoutBlock<YAxis> { LayoutBlock(anchor: self.lastBaselineAnchor) }
+
+    // combinedAnchors
+    var size: LayoutBlock<LayoutAnchorPair<Dimension, Dimension>> {
+        LayoutBlock(anchor: LayoutAnchorPair(anchor1: width.anchor, anchor2: height.anchor))
+    }
+    var centerXY: LayoutBlock<CentreAnchorPair> {
+        LayoutBlock(anchor: LayoutAnchorPair(anchor1: centerX.anchor, anchor2: centerY.anchor))
+    }
+    var horizontalEdges: LayoutBlock<XAxisAnchorPair> {
+        LayoutBlock(anchor: LayoutAnchorPair(anchor1: leading.anchor,anchor2: trailing.anchor))
+    }
+    var verticalEdges: LayoutBlock<YAxisAnchorPair> {
+        LayoutBlock(anchor: LayoutAnchorPair(anchor1: top.anchor, anchor2: bottom.anchor))
+    }
+    var edges: LayoutBlock<EdgeAnchors> { LayoutBlock(anchor: EdgeAnchors( xAxis: horizontalEdges.anchor, yAxis: verticalEdges.anchor)) }
+
+    
+
 }
 
-
-
+//
+//
+//| SimConstraints       | Anchors           |
+//| ------------- |:-------------:|
+//top | topAnchor
+//bottom | bottomAnchor
+//leading | leadingAnchor
+//trailing | trailingAnchor
+//centerX | centerXAnchor
+//centerY | centerYAnchor
+//height | heightAnchor
+//width | widthAnchor
+//left | leftAnchor
+//right | rightAnchor
+//firstBaseline | firstBaselineAnchor
+//lastBaseline | lastBaselineAnchor
+//
+//
+//| Composite Anchors       | Basic Anchors           |
+//| ------------- |:-------------:|
+//size | width, height
+//centerXY | centerX, centerY
+//horizontalEdges | leading, trailing
+//verticalEdges | top, bottom
+//edges | leading, trailing, top, bottom

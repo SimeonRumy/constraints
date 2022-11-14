@@ -33,29 +33,20 @@ import UIKit
 
 #endif
 
-//MARK: - Base Layout Anchor
+//MARK: - Layout Anchor
 
 /// Wraps the default methods available to all NSLayoutAnchors
-public protocol BaseLayoutAnchor {
+public protocol LayoutAnchor {
     
     func constraint(equalTo anchor: Self,constant: CGFloat) -> NSLayoutConstraint
     func constraint(greaterThanOrEqualTo anchor: Self, constant: CGFloat) -> NSLayoutConstraint
     func constraint(lessThanOrEqualTo anchor: Self,constant: CGFloat) -> NSLayoutConstraint
 }
 
-extension NSLayoutAnchor: BaseLayoutAnchor {}
-
-//MARK: - Layout Anchor
 
 /// Adds multiplier paramater to default BaseLayoutAnchor/NSLayoutAnchor methods
-public protocol LayoutAnchor {
-    func constraint(equalTo anchor: Self, multiplier: CGFloat, constant: CGFloat) -> NSLayoutConstraint
-    func constraint(greaterThanOrEqualTo anchor: Self, multiplier: CGFloat, constant: CGFloat) -> NSLayoutConstraint
-    func constraint(lessThanOrEqualTo anchor: Self, multiplier: CGFloat, constant: CGFloat) -> NSLayoutConstraint
-}
-
 /// Default implementation of multiply methods
-extension LayoutAnchor where Self: BaseLayoutAnchor {
+extension LayoutAnchor {
     public func constraint(equalTo anchor: Self, multiplier: CGFloat, constant: CGFloat) -> NSLayoutConstraint {
         self.constraint(equalTo: anchor, constant: constant).multiply(multiplier)
     }
@@ -77,12 +68,12 @@ extension NSLayoutAnchor: LayoutAnchor {}
 /// Similar to LayoutAnchor (signular), but each method can return multiple constraints.
 /// Designed to be a common interface for  types containing more than one anchor. Ex: AnchorPair
 public protocol LayoutAnchors {
-    func constraint(equalTo anchor: Self, multiplier: CGFloat, constant: CGFloat) -> [NSLayoutConstraint]
-    func constraint(greaterThanOrEqualTo anchor: Self, multiplier: CGFloat, constant: CGFloat) -> [NSLayoutConstraint]
-    func constraint(lessThanOrEqualTo anchor: Self, multiplier: CGFloat, constant: CGFloat) -> [NSLayoutConstraint]
+    func constraint(equalTo anchor: Self, multiplier: CGFloat, insets: EdgeInsetPair) -> [NSLayoutConstraint]
+    func constraint(greaterThanOrEqualTo anchor: Self, multiplier: CGFloat, insets: EdgeInsetPair) -> [NSLayoutConstraint]
+    func constraint(lessThanOrEqualTo anchor: Self, multiplier: CGFloat, insets: EdgeInsetPair) -> [NSLayoutConstraint]
 }
 
-public class AnchorPair<T: BaseLayoutAnchor, R: BaseLayoutAnchor> {
+public class LayoutAnchorPair<T: LayoutAnchor, R: LayoutAnchor> {
 
     var anchor1: T
     var anchor2: R
@@ -93,53 +84,144 @@ public class AnchorPair<T: BaseLayoutAnchor, R: BaseLayoutAnchor> {
     }
 }
 
-extension AnchorPair: LayoutAnchors {
+public protocol EdgeInsetPair {
+    var constant1: CGFloat { get }
+    var constant2: CGFloat { get }
+}
 
-    public func constraint(equalTo anchor: AnchorPair, multiplier: CGFloat,  constant: CGFloat) -> [NSLayoutConstraint] {
+struct HorizontalInsetPair: EdgeInsetPair {
+    
+    let right: CGFloat
+    let left: CGFloat
+    
+    var constant1: CGFloat {
+        return right
+    }
+    
+    var constant2: CGFloat {
+        return left
+    }
+    
+}
+
+struct VerticalInsetPair: EdgeInsetPair {
+    
+    let top: CGFloat
+    let bottom: CGFloat
+    
+    var constant1: CGFloat {
+        return top
+    }
+    
+    var constant2: CGFloat {
+        return bottom
+    }
+    
+}
+
+struct GenericInsetPair: EdgeInsetPair {
+    
+    var constant1: CGFloat
+    
+    var constant2: CGFloat
+    
+    init(constant1: CGFloat, constant2: CGFloat) {
+        self.constant1 = constant1
+        self.constant2 = constant2
+    }
+    
+    init(constant: CGFloat) {
+        self.init(constant1: constant, constant2: constant)
+    }
+    
+}
+
+extension LayoutAnchorPair: LayoutAnchors {
+
+    public func constraint(equalTo anchor: LayoutAnchorPair, multiplier: CGFloat,  insets: EdgeInsetPair) -> [NSLayoutConstraint] {
         [
-            self.anchor1.constraint(equalTo: anchor.anchor1, constant: constant).multiply(multiplier),
-            self.anchor2.constraint(equalTo: anchor.anchor2, constant: constant).multiply(multiplier),
+            self.anchor1.constraint(equalTo: anchor.anchor1, multiplier: multiplier, constant: insets.constant1),
+            self.anchor2.constraint(equalTo: anchor.anchor2, multiplier: multiplier, constant: insets.constant2),
         ]
     }
 
-    public func constraint(greaterThanOrEqualTo anchor: AnchorPair, multiplier: CGFloat,  constant: CGFloat) -> [NSLayoutConstraint] {
+    public func constraint(greaterThanOrEqualTo anchor: LayoutAnchorPair, multiplier: CGFloat,  insets: EdgeInsetPair) -> [NSLayoutConstraint] {
         [
-            self.anchor1.constraint(greaterThanOrEqualTo: anchor.anchor1, constant: constant).multiply(multiplier),
-            self.anchor2.constraint(greaterThanOrEqualTo: anchor.anchor2, constant: constant).multiply(multiplier),
+            self.anchor1.constraint(greaterThanOrEqualTo: anchor.anchor1, multiplier: multiplier, constant: insets.constant1),
+            self.anchor2.constraint(greaterThanOrEqualTo: anchor.anchor2, multiplier: multiplier, constant: insets.constant2),
         ]
     }
 
 
-    public func constraint(lessThanOrEqualTo anchor: AnchorPair, multiplier: CGFloat, constant: CGFloat) -> [NSLayoutConstraint] {
+    public func constraint(lessThanOrEqualTo anchor: LayoutAnchorPair, multiplier: CGFloat, insets: EdgeInsetPair) -> [NSLayoutConstraint] {
         [
-            self.anchor1.constraint(lessThanOrEqualTo: anchor.anchor1, constant: constant).multiply(multiplier),
-            self.anchor2.constraint(lessThanOrEqualTo: anchor.anchor2, constant: constant).multiply(multiplier),
+            self.anchor1.constraint(lessThanOrEqualTo: anchor.anchor1, multiplier: multiplier, constant: insets.constant1),
+            self.anchor2.constraint(lessThanOrEqualTo: anchor.anchor2, multiplier: multiplier, constant: insets.constant2),
         ]
+    }
+}
+
+
+
+//MARK: - Edge Anchors 
+
+
+public protocol LayoutAnchorGroup {
+    func constraint(equalTo anchor: Self, multiplier: CGFloat, insets: UIEdgeInsets) -> [NSLayoutConstraint]
+    func constraint(greaterThanOrEqualTo anchor: Self, multiplier: CGFloat, insets: UIEdgeInsets) -> [NSLayoutConstraint]
+    func constraint(lessThanOrEqualTo anchor: Self, multiplier: CGFloat, insets: UIEdgeInsets) -> [NSLayoutConstraint]
+}
+
+
+public struct EdgeAnchors {
+
+    var xAxis: XAxisAnchorPair
+    var yAxis: YAxisAnchorPair
+    
+    init(xAxis: XAxisAnchorPair, yAxis: YAxisAnchorPair) {
+        self.xAxis = xAxis
+        self.yAxis = yAxis
+    }
+}
+
+extension EdgeAnchors: LayoutAnchorGroup {
+    
+
+    public func constraint(equalTo anchor: EdgeAnchors, multiplier: CGFloat,  insets: UIEdgeInsets) -> [NSLayoutConstraint] {
+        Constraints {
+            self.xAxis.constraint(equalTo: anchor.xAxis, multiplier: multiplier, insets: insets.horizontalInsets())
+            self.yAxis.constraint(equalTo: anchor.yAxis, multiplier: multiplier, insets: insets.verticalInsets())
+        }
+    }
+
+    public func constraint(greaterThanOrEqualTo anchor: EdgeAnchors, multiplier: CGFloat,  insets: UIEdgeInsets) -> [NSLayoutConstraint] {
+        Constraints {
+            self.xAxis.constraint(greaterThanOrEqualTo: anchor.xAxis, multiplier: multiplier, insets: insets.horizontalInsets())
+            self.yAxis.constraint(greaterThanOrEqualTo: anchor.yAxis, multiplier: multiplier, insets: insets.verticalInsets())
+        }
+    }
+
+
+    public func constraint(lessThanOrEqualTo anchor: EdgeAnchors, multiplier: CGFloat, insets: UIEdgeInsets) -> [NSLayoutConstraint] {
+        Constraints {
+            self.xAxis.constraint(lessThanOrEqualTo: anchor.xAxis, multiplier: multiplier, insets: insets.horizontalInsets())
+            self.yAxis.constraint(lessThanOrEqualTo: anchor.yAxis, multiplier: multiplier, insets: insets.verticalInsets())
+        }
     }
 
 }
 
-extension AnchorPair where T: Dimension, R: Dimension {
-    
-    public func constraint(equalToConstant constant: CGFloat) -> [NSLayoutConstraint] {
-        [
-            self.anchor1.constraint(equalToConstant: constant),
-            self.anchor2.constraint(equalToConstant: constant),
-        ]
-    }
-    
-    public func constraint(greaterThanOrEqualToConstant constant: CGFloat) -> [NSLayoutConstraint] {
-        [
-            self.anchor1.constraint(greaterThanOrEqualToConstant: constant),
-            self.anchor2.constraint(greaterThanOrEqualToConstant: constant),
-        ]
-    }
-    
-    public func constraint(lessThanOrEqualToConstant constant: CGFloat) -> [NSLayoutConstraint] {
-        [
-            self.anchor1.constraint(lessThanOrEqualToConstant: constant),
-            self.anchor2.constraint(lessThanOrEqualToConstant: constant),
-        ]
+
+
+
+extension UIEdgeInsets {
+    func horizontalInsets() -> HorizontalInsetPair {
+        HorizontalInsetPair(right: self.right, left: self.left)
     }
 }
 
+extension UIEdgeInsets {
+    func verticalInsets() -> VerticalInsetPair {
+        VerticalInsetPair(top: self.top, bottom: self.bottom)
+    }
+}

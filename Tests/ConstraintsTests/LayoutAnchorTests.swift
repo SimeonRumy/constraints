@@ -43,13 +43,20 @@ final class LayoutAnchorTests: XCTestCase {
         XCTAssertEqual(view1.height.anchor, view1.heightAnchor)
         XCTAssertEqual(view1.centerX.anchor, view1.centerXAnchor)
         XCTAssertEqual(view1.centerY.anchor, view1.centerYAnchor)
-        XCTAssertEqual(view1.baseline.anchor, view1.lastBaselineAnchor)
         XCTAssertEqual(view1.firstBaseline.anchor, view1.firstBaselineAnchor)
         XCTAssertEqual(view1.lastBaseline.anchor, view1.lastBaselineAnchor)
         XCTAssertEqual(view1.size.anchor.anchor1, view1.widthAnchor)
         XCTAssertEqual(view1.size.anchor.anchor2, view1.heightAnchor)
         XCTAssertEqual(view1.centerXY.anchor.anchor1, view1.centerXAnchor)
         XCTAssertEqual(view1.centerXY.anchor.anchor2, view1.centerYAnchor)
+        XCTAssertEqual(view1.horizontalEdges.anchor.anchor1, view1.leadingAnchor)
+        XCTAssertEqual(view1.horizontalEdges.anchor.anchor2, view1.trailingAnchor)
+        XCTAssertEqual(view1.verticalEdges.anchor.anchor1, view1.topAnchor)
+        XCTAssertEqual(view1.verticalEdges.anchor.anchor2, view1.bottomAnchor)
+        XCTAssertEqual(view1.edges.anchor.xAxis.anchor1, view1.leadingAnchor)
+        XCTAssertEqual(view1.edges.anchor.xAxis.anchor2, view1.trailingAnchor)
+        XCTAssertEqual(view1.edges.anchor.yAxis.anchor1, view1.topAnchor)
+        XCTAssertEqual(view1.edges.anchor.yAxis.anchor2, view1.bottomAnchor)
     }
     
     
@@ -68,6 +75,14 @@ final class LayoutAnchorTests: XCTestCase {
         XCTAssertEqual(view1.layoutMarginsGuide.size.anchor.anchor2, view1.layoutMarginsGuide.heightAnchor)
         XCTAssertEqual(view1.layoutMarginsGuide.centerXY.anchor.anchor1, view1.layoutMarginsGuide.centerXAnchor)
         XCTAssertEqual(view1.layoutMarginsGuide.centerXY.anchor.anchor2, view1.layoutMarginsGuide.centerYAnchor)
+        XCTAssertEqual(view1.layoutMarginsGuide.horizontalEdges.anchor.anchor1, view1.layoutMarginsGuide.leadingAnchor)
+        XCTAssertEqual(view1.layoutMarginsGuide.horizontalEdges.anchor.anchor2, view1.layoutMarginsGuide.trailingAnchor)
+        XCTAssertEqual(view1.layoutMarginsGuide.verticalEdges.anchor.anchor1, view1.layoutMarginsGuide.topAnchor)
+        XCTAssertEqual(view1.layoutMarginsGuide.verticalEdges.anchor.anchor2, view1.layoutMarginsGuide.bottomAnchor)
+        XCTAssertEqual(view1.layoutMarginsGuide.edges.anchor.xAxis.anchor1, view1.layoutMarginsGuide.leadingAnchor)
+        XCTAssertEqual(view1.layoutMarginsGuide.edges.anchor.xAxis.anchor2, view1.layoutMarginsGuide.trailingAnchor)
+        XCTAssertEqual(view1.layoutMarginsGuide.edges.anchor.yAxis.anchor1, view1.layoutMarginsGuide.topAnchor)
+        XCTAssertEqual(view1.layoutMarginsGuide.edges.anchor.yAxis.anchor2, view1.layoutMarginsGuide.bottomAnchor)
     }
     
     func test_SafeAreaLayoutGuideAnchorValues() {
@@ -85,6 +100,14 @@ final class LayoutAnchorTests: XCTestCase {
         XCTAssertEqual(view1.safeAreaLayoutGuide.size.anchor.anchor2, view1.safeAreaLayoutGuide.heightAnchor)
         XCTAssertEqual(view1.safeAreaLayoutGuide.centerXY.anchor.anchor1, view1.safeAreaLayoutGuide.centerXAnchor)
         XCTAssertEqual(view1.safeAreaLayoutGuide.centerXY.anchor.anchor2, view1.safeAreaLayoutGuide.centerYAnchor)
+        XCTAssertEqual(view1.safeAreaLayoutGuide.horizontalEdges.anchor.anchor1, view1.safeAreaLayoutGuide.leadingAnchor)
+        XCTAssertEqual(view1.safeAreaLayoutGuide.horizontalEdges.anchor.anchor2, view1.safeAreaLayoutGuide.trailingAnchor)
+        XCTAssertEqual(view1.safeAreaLayoutGuide.verticalEdges.anchor.anchor1, view1.safeAreaLayoutGuide.topAnchor)
+        XCTAssertEqual(view1.safeAreaLayoutGuide.verticalEdges.anchor.anchor2, view1.safeAreaLayoutGuide.bottomAnchor)
+        XCTAssertEqual(view1.safeAreaLayoutGuide.edges.anchor.xAxis.anchor1, view1.safeAreaLayoutGuide.leadingAnchor)
+        XCTAssertEqual(view1.safeAreaLayoutGuide.edges.anchor.xAxis.anchor2, view1.safeAreaLayoutGuide.trailingAnchor)
+        XCTAssertEqual(view1.safeAreaLayoutGuide.edges.anchor.yAxis.anchor1, view1.safeAreaLayoutGuide.topAnchor)
+        XCTAssertEqual(view1.safeAreaLayoutGuide.edges.anchor.yAxis.anchor2, view1.safeAreaLayoutGuide.bottomAnchor)
     }
     
 

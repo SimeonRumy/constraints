@@ -49,7 +49,12 @@ public extension LayoutGuide {
     var height: LayoutBlock<Dimension> { LayoutBlock(anchor: self.heightAnchor) }
     var centerX: LayoutBlock<XAxis> { LayoutBlock(anchor: self.centerXAnchor) }
     var centerY: LayoutBlock<YAxis> { LayoutBlock(anchor: self.centerYAnchor) }
-    var size: LayoutBlock<AnchorPair<Dimension, Dimension>> { LayoutBlock(anchor: AnchorPair(anchor1: self.widthAnchor, anchor2: self.heightAnchor))}
-    var centerXY: LayoutBlock<AnchorPair<XAxis, YAxis>> { LayoutBlock(anchor: AnchorPair(anchor1: self.centerXAnchor, anchor2: self.centerYAnchor))}
+    // Combined Anchors
+    var size: LayoutBlock<LayoutAnchorPair<Dimension, Dimension>> { LayoutBlock(anchor: LayoutAnchorPair(anchor1: width.anchor, anchor2: height.anchor))}
+    var centerXY: LayoutBlock<LayoutAnchorPair<XAxis, YAxis>> { LayoutBlock(anchor: LayoutAnchorPair(anchor1: centerX.anchor, anchor2: centerY.anchor))}
+    var horizontalEdges: LayoutBlock<XAxisAnchorPair> {  LayoutBlock(anchor: LayoutAnchorPair(anchor1: leading.anchor,anchor2: trailing.anchor)) }
+    var verticalEdges: LayoutBlock<YAxisAnchorPair> {  LayoutBlock(anchor: LayoutAnchorPair(anchor1: top.anchor, anchor2: bottom.anchor)) }
+    var edges: LayoutBlock<EdgeAnchors> { LayoutBlock(anchor: EdgeAnchors( xAxis: horizontalEdges.anchor, yAxis: verticalEdges.anchor)) }
+    
 }
 
