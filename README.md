@@ -6,7 +6,9 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+[![License](https://img.shields.io/badge/license-MIT-green)](https://img.shields.io/badge/license-MIT-green)
+[![Swift 5.7](https://img.shields.io/badge/Swift-5.4%20+%205.7-orange.svg)](https://swift.org)
+[![Code Coverage](https://img.shields.io/badge/coverage-97.4%25-green?style=flat)](https://img.shields.io/badge/coverage-97.4%25-green?style=flat)
 
 
 
@@ -80,6 +82,8 @@ view.bottom == 4 * button.top + 10
 
 ## Usage 
 
+### Basic Anchors
+
 SimConstraints provides a wrapper over the LayoutAnchor API. Basic anchors consist off:
 
 * top
@@ -95,13 +99,18 @@ SimConstraints provides a wrapper over the LayoutAnchor API. Basic anchors consi
 * firstBaseline
 * lastBaseline
 
+### Composite Anchors
+
 Composite Anchors combine together basic anchors, enabling setting multiple constraints at once.
 
-* size - width, height
-* centerXY - centerX, centerY
-* horizontalEdges - leading, trailing
-* verticalEdges - top, bottom
-* edges - leading, trailing, top, bottom
+| Composite     | Basic Anchors |
+| ------------- |---------------|
+size            | width, height
+centerXY        | centerX, centerY
+horizontalEdges | leading, trailing
+verticalEdges   | top, bottom
+edges           | leading, trailing, top, bottom
+
 
 ### Relations
 
@@ -117,7 +126,7 @@ Relations are expresed using swift operators:
 
 ```swift
 button.leading == button2.trailing + 10   
-// which is  equivlant to both:
+// which is equivlant to both:
 button.leading - 10 == button2.trailing 
 button.leading == 10 + button2.trailing
 ```
@@ -133,7 +142,7 @@ button.leading == 2 * button2.trailing / 3
 ```swift
 view.centerY == superview.centerY
 view.centerX == superview.centerX
-// or with composite anchor - centerXY:
+// or using the composite anchor - centerXY:
 view.centerXY == superview.centerXY
 ```
 
@@ -153,11 +162,14 @@ view.verticalEdges == superview.verticalEdges
 view.edges == superview.edges
 ```
 
-#### Insets
+#### Insets with composite anchors
+
 Composite Anchors also support setting insets.
 
 ```swift
 view1.edges == view2.edges + UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+view1.horizontalEdges == 10
+view1.horizontalEdges == view2.horizontalEdges + UIEdgeInsets(left: 10, right: 10)
 ```
 
 ### Size
@@ -184,28 +196,15 @@ button.size == CGSize(width: 200, height: 100)
 button.size == 100 // square
 ```
 
-### Batching Constraints
+### Batching and Activating Constraints
 
-SimConstraints uses Results Builders to provide a simple way to batch and activate constraints.
-
-
-
-### Priority
-
-Set priority on individual constraints using ~ operator
-```swift
-view1.top == view2.top + 20 ~ .required
-view1.bottom == view2.bottom + 20 ~ .priority(500) // set custom priority
-view1.trailing == view2.trailing + 20 ~ .almostRequired
-```
-
-Furthermore ```.priority()``` method can be called on  arrays and individual constraints.
+SimConstraints uses Results Builders to provide a simple way to batch together individual constraints with arrays of constraints returned my composite anchors.
 
 ### Constraint Activation
 
 Unlike other similar libraries, constraints are not activated individually by default, because that is not efficient and can slow down view rendering.
 
-You can capture and activate an individual or an array of constraints using the ```.activate()``` method. When you call this method SimConstraints uses ```NSLayoutConstraint.activateConstraints([])``` under the hood. This is the recomended way. You should aim to activate all constraints in one go.
+You can activate an individual or an array of constraints using the ```.activate()``` method. When you call this method SimConstraints uses ```NSLayoutConstraint.activate([])``` under the hood. This is the recomended way. You should aim to activate all constraints in one go.
 
 
 ```swift
@@ -236,8 +235,18 @@ Constraints {
 }.activate()
 ```
 
-Note, that all constraints are activated in one go and we did not have to store any of them just to activate them later as part of one call to ```NSLayoutConstraint.activateConstraints([])```. Result builders handle and simplify all of that.
+Note, that all constraints are activated in one go and we did not have to store any of them just to activate them later as part of one call to ```NSLayoutConstraint.activate([])```. Result builders handle and simplify all of that.
 
+### Priority
+
+Set priority on individual constraints using ~ operator
+```swift
+view1.top == view2.top + 20 ~ .required
+view1.bottom == view2.bottom + 20 ~ .priority(500) // set custom priority
+view1.trailing == view2.trailing + 20 ~ .almostRequired
+```
+
+Furthermore ```.priority()``` method can be called on  arrays and individual constraints.
 
 ## Installation
 
@@ -245,6 +254,7 @@ Install using [Swift Package Manager](https://github.com/apple/swift-package-man
 
 ## Contact
 
+Simeon Rumyannikov
 * [Linked-in](https://www.linkedin.com/in/simeon-rumyannikov/)
 * Email: simeonrumyannikov@gmail.com
 
@@ -280,7 +290,8 @@ This package uses result builders to create a 'Constraints Builder' which takes 
 Constraints {
     view.heightAnchor.constraint(equalTo: view2.heightAnchor, multiplier: 1)
     view.widthAnchor.constraint(equalToConstant: 200)
-    view2.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+    view.centerXAnchor.constraint(equalTo: view2.centerXAnchor)
+    view.centerYAnchor.constraint(equalTo: view2.centerYAnchor)
 }
 
 ```
@@ -320,3 +331,6 @@ Using function builders offers 3 minor advantages.
 1. No need to keep track of commas. Can be annoying when adding a lot of constraints.
 2. The keyword 'Constraints' allows us to quickly find the constraints using Cmd+F.
 3. Opens up further potential for improving the way constraints configured.
+
+
+I have built a fully functional and tested Auto Layout with some of Swifts newest features, documenting the process. 
