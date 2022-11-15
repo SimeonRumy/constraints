@@ -14,7 +14,7 @@
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
     <!-- <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
-    <p style="font-size: 100px">🏗️</p>
+    <span style="font-size: 100px">🏗️</span>
   </a>
 
 <h3 align="center">Constraint Builder</h3>
@@ -189,13 +189,26 @@ button.size == 100 // square
 
 ### Batching and Activating Constraints
 
-Constraint Builder uses Results Builders to provide a simple way to batch together individual constraints with arrays of constraints returned my composite anchors.
+Constraints are not activated individually by default because that is not efficient and can slow down view rendering. Multiple constraints should be activated using ```NSLayoutConstraint.activate([])``` according to Apple . Therefore, we need an intuitive way to batch and activate constraints.
 
-### Constraint Activation
 
-Unlike other similar libraries, constraints are not activated individually by default, because that is not efficient and can slow down view rendering.
+```swift
+button.height == 100 // returns NSLayoutConstraint
+button.size == 100 // returns [NSLayoutConstraint]
+```
 
-You can activate an individual or an array of constraints using the ```.activate()``` method. When you call this method Constraint Builder uses ```NSLayoutConstraint.activate([])``` under the hood. This is the recomended way. You should aim to activate all constraints in one go.
+Constraint Builder uses Results Builders to provide a simple simple API to batch together single constraints with arrays of constraints returned my composite anchors.
+
+```swift
+Constraints {
+    button.height == 100 // returns NSLayoutConstraint
+    button.size == 100 // returns [NSLayoutConstraint]
+} // Builds result implicitly and returns [NSLayoutConstraint]
+```
+
+#### Activation
+
+You can activate an individual or an array of constraints using the ```.activate()``` method. This calls ```NSLayoutConstraint.activate([])``` under the hood ensuring performance. 
 
 
 ```swift
@@ -208,7 +221,7 @@ Constraints {
 }.activate()
 ```
 
-Result builders also allow us to include additional control flow within the closure, which would not be possible with an array. 
+Result builders also allow us to include additional control flow within the closure. 
 
 ```swift
 Constraints {
@@ -226,7 +239,7 @@ Constraints {
 }.activate()
 ```
 
-Note, that all constraints are activated in one go and we did not have to store any of them just to activate them later as part of one call to ```NSLayoutConstraint.activate([])```. Result builders handle and simplify all of that.
+
 
 ### Priority
 
