@@ -1,14 +1,11 @@
-# Sim Constraints
+# Constraint Builder
 
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+
 [![License](https://img.shields.io/badge/license-MIT-green)](https://img.shields.io/badge/license-MIT-green)
 [![Swift 5.7](https://img.shields.io/badge/Swift-5.4%20+%205.7-orange.svg)](https://swift.org)
 [![Code Coverage](https://img.shields.io/badge/coverage-97.4%25-green?style=flat)](https://img.shields.io/badge/coverage-97.4%25-green?style=flat)
+[![Stars](https://img.shields.io/github/stars/SimeonRumy/constraints?style=social)](https://img.shields.io/github/stars/SimeonRumy/constraints?style=social)
 
 
 
@@ -16,22 +13,23 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <!-- <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
+    <p style="font-size: 100px">🏗️</p>
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">Constraint Builder</h3>
 
   <p align="center">
-    project_description
-    <br />
+    A simiple Auto Layout DSL
+    <!-- <br />
     <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <br /> -->
     <br />
-    <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="https://github.com/SimeonRumy/constraints">View Demo</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
+    <a href="https://github.com/SimeonRumy/constraints/issues">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    <a href="https://github.com/SimeonRumy/constraints/issues">Request Feature</a>
   </p>
 </div>
 
@@ -42,15 +40,10 @@
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
     <li><a href="#usage">Usage</a></li>
+        <ul><a href="#aligment">Aligment</a></ul>
+        <ul><a href="#size">Size</a></ul>
+        <ul><a href="#Batching and Activating Constraints">Batching and Activating Constraints</a></ul>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -76,15 +69,13 @@ view.bottom == 4 * button.top + 10
 > `item1.attribute1 = multiplier × item2.attribute2 + constant`
 
 
-![dd](/Resources/images/example_1.png)
-
 
 
 ## Usage 
 
 ### Basic Anchors
 
-SimConstraints provides a wrapper over the LayoutAnchor API. Basic anchors consist off:
+Constraint Builder provides a wrapper over the LayoutAnchor API. Basic anchors consist off:
 
 * top
 * bottom 
@@ -198,13 +189,13 @@ button.size == 100 // square
 
 ### Batching and Activating Constraints
 
-SimConstraints uses Results Builders to provide a simple way to batch together individual constraints with arrays of constraints returned my composite anchors.
+Constraint Builder uses Results Builders to provide a simple way to batch together individual constraints with arrays of constraints returned my composite anchors.
 
 ### Constraint Activation
 
 Unlike other similar libraries, constraints are not activated individually by default, because that is not efficient and can slow down view rendering.
 
-You can activate an individual or an array of constraints using the ```.activate()``` method. When you call this method SimConstraints uses ```NSLayoutConstraint.activate([])``` under the hood. This is the recomended way. You should aim to activate all constraints in one go.
+You can activate an individual or an array of constraints using the ```.activate()``` method. When you call this method Constraint Builder uses ```NSLayoutConstraint.activate([])``` under the hood. This is the recomended way. You should aim to activate all constraints in one go.
 
 
 ```swift
