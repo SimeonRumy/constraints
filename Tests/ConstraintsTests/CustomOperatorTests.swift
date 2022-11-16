@@ -98,6 +98,8 @@ final class CustomOperatorTests: XCTestCase {
         XCTAssertEqual(constraints.count, 2)
         XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
         XCTAssertEqual(constraints[0].secondItem as? View, constraints[1].secondItem as? View)
+        XCTAssertEqual(constraints[0].firstAttribute, .height)
+        XCTAssertEqual(constraints[1].firstAttribute, .width)
         XCTAssertTrue(constraints.allSatisfy { $0.relation == .equal})
         
     }
@@ -107,6 +109,8 @@ final class CustomOperatorTests: XCTestCase {
         XCTAssertEqual(constraints.count, 2)
         XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
         XCTAssertEqual(constraints[0].secondItem as? View, constraints[1].secondItem as? View)
+        XCTAssertEqual(constraints[0].firstAttribute, .height)
+        XCTAssertEqual(constraints[1].firstAttribute, .width)
         XCTAssertTrue(constraints.allSatisfy { $0.relation == .greaterThanOrEqual})
         
     }
@@ -116,6 +120,8 @@ final class CustomOperatorTests: XCTestCase {
         XCTAssertEqual(constraints.count, 2)
         XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
         XCTAssertEqual(constraints[0].secondItem as? View, constraints[1].secondItem as? View)
+        XCTAssertEqual(constraints[0].firstAttribute, .height)
+        XCTAssertEqual(constraints[1].firstAttribute, .width)
         XCTAssertTrue(constraints.allSatisfy { $0.relation == .lessThanOrEqual})
         
     }
@@ -125,6 +131,8 @@ final class CustomOperatorTests: XCTestCase {
         XCTAssertEqual(constraints.count, 2)
         XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
         XCTAssertEqual(constraints[0].secondItem as? View, constraints[1].secondItem as? View)
+        XCTAssertEqual(constraints[0].firstAttribute, .centerY)
+        XCTAssertEqual(constraints[1].firstAttribute, .centerX)
         XCTAssertTrue(constraints.allSatisfy { $0.relation == .equal})
         
     }
@@ -134,6 +142,8 @@ final class CustomOperatorTests: XCTestCase {
         XCTAssertEqual(constraints.count, 2)
         XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
         XCTAssertEqual(constraints[0].secondItem as? View, constraints[1].secondItem as? View)
+        XCTAssertEqual(constraints[0].firstAttribute, .centerY)
+        XCTAssertEqual(constraints[1].firstAttribute, .centerX)
         XCTAssertTrue(constraints.allSatisfy { $0.relation == .greaterThanOrEqual})
         
     }
@@ -143,6 +153,8 @@ final class CustomOperatorTests: XCTestCase {
         XCTAssertEqual(constraints.count, 2)
         XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
         XCTAssertEqual(constraints[0].secondItem as? View, constraints[1].secondItem as? View)
+        XCTAssertEqual(constraints[0].firstAttribute, .centerY)
+        XCTAssertEqual(constraints[1].firstAttribute, .centerX)
         XCTAssertTrue(constraints.allSatisfy { $0.relation == .lessThanOrEqual})
     }
     
@@ -151,6 +163,8 @@ final class CustomOperatorTests: XCTestCase {
         XCTAssertEqual(constraints.count, 2)
         XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
         XCTAssertEqual(constraints[0].secondItem as? View, constraints[1].secondItem as? View)
+        XCTAssertEqual(constraints[0].firstAttribute, .trailing)
+        XCTAssertEqual(constraints[1].firstAttribute, .leading)
         XCTAssertTrue(constraints.allSatisfy { $0.relation == .equal})
     }
     
@@ -159,6 +173,8 @@ final class CustomOperatorTests: XCTestCase {
         XCTAssertEqual(constraints.count, 2)
         XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
         XCTAssertEqual(constraints[0].secondItem as? View, constraints[1].secondItem as? View)
+        XCTAssertEqual(constraints[0].firstAttribute, .trailing)
+        XCTAssertEqual(constraints[1].firstAttribute, .leading)
         XCTAssertTrue(constraints.allSatisfy { $0.relation == .greaterThanOrEqual})
     }
     
@@ -167,6 +183,38 @@ final class CustomOperatorTests: XCTestCase {
         XCTAssertEqual(constraints.count, 2)
         XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
         XCTAssertEqual(constraints[0].secondItem as? View, constraints[1].secondItem as? View)
+        XCTAssertEqual(constraints[0].firstAttribute, .trailing)
+        XCTAssertEqual(constraints[1].firstAttribute, .leading)
+        XCTAssertTrue(constraints.allSatisfy { $0.relation == .lessThanOrEqual})
+    }
+    
+    func test_VerticalAnchors_Equal() {
+        let constraints = view1.verticalEdges == view2.verticalEdges
+        XCTAssertEqual(constraints.count, 2)
+        XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
+        XCTAssertEqual(constraints[0].secondItem as? View, constraints[1].secondItem as? View)
+        XCTAssertEqual(constraints[0].firstAttribute, .top)
+        XCTAssertEqual(constraints[1].firstAttribute, .bottom)
+        XCTAssertTrue(constraints.allSatisfy { $0.relation == .equal})
+    }
+    
+    func test_VerticalAnchors_GreaterThanOrEqual() {
+        let constraints = view1.verticalEdges >= view2.verticalEdges
+        XCTAssertEqual(constraints.count, 2)
+        XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
+        XCTAssertEqual(constraints[0].secondItem as? View, constraints[1].secondItem as? View)
+        XCTAssertEqual(constraints[0].firstAttribute, .top)
+        XCTAssertEqual(constraints[1].firstAttribute, .bottom)
+        XCTAssertTrue(constraints.allSatisfy { $0.relation == .greaterThanOrEqual})
+    }
+    
+    func test_VerticalAnchors_LessThanOrEqual() {
+        let constraints = view1.verticalEdges <= view2.verticalEdges
+        XCTAssertEqual(constraints.count, 2)
+        XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
+        XCTAssertEqual(constraints[0].secondItem as? View, constraints[1].secondItem as? View)
+        XCTAssertEqual(constraints[0].firstAttribute, .top)
+        XCTAssertEqual(constraints[1].firstAttribute, .bottom)
         XCTAssertTrue(constraints.allSatisfy { $0.relation == .lessThanOrEqual})
     }
     
@@ -179,6 +227,8 @@ final class CustomOperatorTests: XCTestCase {
         XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
         XCTAssertEqual(constraints[0].constant, 200)
         XCTAssertEqual(constraints[1].constant, 200)
+        XCTAssertEqual(constraints[0].firstAttribute, .width)
+        XCTAssertEqual(constraints[1].firstAttribute, .height)
         XCTAssertTrue(constraints.allSatisfy { $0.relation == .equal})
         
     }
@@ -189,6 +239,8 @@ final class CustomOperatorTests: XCTestCase {
         XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
         XCTAssertEqual(constraints[0].constant, 200)
         XCTAssertEqual(constraints[1].constant, 200)
+        XCTAssertEqual(constraints[0].firstAttribute, .width)
+        XCTAssertEqual(constraints[1].firstAttribute, .height)
         XCTAssertTrue(constraints.allSatisfy { $0.relation == .lessThanOrEqual})
         
     }
@@ -199,6 +251,8 @@ final class CustomOperatorTests: XCTestCase {
         XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
         XCTAssertEqual(constraints[0].constant, 200)
         XCTAssertEqual(constraints[1].constant, 200)
+        XCTAssertEqual(constraints[0].firstAttribute, .width)
+        XCTAssertEqual(constraints[1].firstAttribute, .height)
         XCTAssertTrue(constraints.allSatisfy { $0.relation == .greaterThanOrEqual})
         
     }
@@ -209,6 +263,8 @@ final class CustomOperatorTests: XCTestCase {
         XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
         XCTAssertEqual(constraints[0].constant, 200)
         XCTAssertEqual(constraints[1].constant, 100)
+        XCTAssertEqual(constraints[0].firstAttribute, .width)
+        XCTAssertEqual(constraints[1].firstAttribute, .height)
         XCTAssertTrue(constraints.allSatisfy { $0.relation == .equal})
     }
     
@@ -218,6 +274,8 @@ final class CustomOperatorTests: XCTestCase {
         XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
         XCTAssertEqual(constraints[0].constant, 200)
         XCTAssertEqual(constraints[1].constant, 100)
+        XCTAssertEqual(constraints[0].firstAttribute, .width)
+        XCTAssertEqual(constraints[1].firstAttribute, .height)
         XCTAssertTrue(constraints.allSatisfy { $0.relation == .lessThanOrEqual})
         
     }
@@ -228,6 +286,8 @@ final class CustomOperatorTests: XCTestCase {
         XCTAssertEqual(constraints[0].firstItem as? View, constraints[1].firstItem as? View)
         XCTAssertEqual(constraints[0].constant, 200)
         XCTAssertEqual(constraints[1].constant, 100)
+        XCTAssertEqual(constraints[0].firstAttribute, .width)
+        XCTAssertEqual(constraints[1].firstAttribute, .height)
         XCTAssertTrue(constraints.allSatisfy { $0.relation == .greaterThanOrEqual})
     }
         
@@ -451,9 +511,30 @@ final class CustomOperatorTests: XCTestCase {
         XCTAssertTrue(constraints.allSatisfy { $0.constant == 10 })
     }
     
-    func test_VerticalEdgeAnchors_insets() {
+    func test_VerticalEdgeAnchors_equalPositiveInsets() {
         let constraints = view1.verticalEdges == view2.verticalEdges + UIEdgeInsets(top: 10, bottom: 10)
         XCTAssertTrue(constraints.allSatisfy { $0.constant == 10 })
+    }
+    
+    func test_VerticalEdgeAnchors_equalNegativeInsets() {
+        let constraints = view1.verticalEdges == view2.verticalEdges - UIEdgeInsets(top: 10, bottom: 10)
+        XCTAssertTrue(constraints.allSatisfy { $0.constant == -10 })
+    }
+    
+    func test_VerticalEdgeAnchors_differentInsets() {
+        let constraints = view1.verticalEdges == view2.verticalEdges + UIEdgeInsets(top: 100, bottom: 10)
+        XCTAssertEqual(constraints[0].firstAttribute, .top)
+        XCTAssertEqual(constraints[0].constant, 100)
+        XCTAssertEqual(constraints[1].firstAttribute, .bottom)
+        XCTAssertEqual(constraints[1].constant, 10)
+    }
+    
+    func test_VerticalEdgeAnchors_differentInsets_inccorectInsetLabel() {
+        let constraints = view1.verticalEdges == view2.verticalEdges + UIEdgeInsets(left: 200, right: 10)
+        XCTAssertEqual(constraints[0].firstAttribute, .top)
+        XCTAssertEqual(constraints[0].constant, 0)
+        XCTAssertEqual(constraints[1].firstAttribute, .bottom)
+        XCTAssertEqual(constraints[1].constant, 0)
     }
     
     func test_HorizontalEdgeAnchors_constant() {
@@ -464,6 +545,27 @@ final class CustomOperatorTests: XCTestCase {
     func test_HorizontallEdgeAnchors_insets() {
         let constraints = view1.horizontalEdges == view2.horizontalEdges + UIEdgeInsets(left: 10, right: 10)
         XCTAssertTrue(constraints.allSatisfy { $0.constant == 10 })
+    }
+    
+    func test_HorizontalEdgeAnchors_equalNegativeInsets() {
+        let constraints = view1.horizontalEdges == view2.horizontalEdges - UIEdgeInsets(left: 10, right: 10)
+        XCTAssertTrue(constraints.allSatisfy { $0.constant == -10 })
+    }
+    
+    func test_HorizontalEdgeAnchors_differentInsets() {
+        let constraints = view1.horizontalEdges == view2.horizontalEdges + UIEdgeInsets(left: 100, right: 10)
+        XCTAssertEqual(constraints[0].firstAttribute, .trailing)
+        XCTAssertEqual(constraints[0].constant, 10)
+        XCTAssertEqual(constraints[1].firstAttribute, .leading)
+        XCTAssertEqual(constraints[1].constant, 100)
+    }
+    
+    func test_HorizontalEdgeAnchors_differentInsets_inccorectInsetLabel() {
+        let constraints = view1.horizontalEdges == view2.horizontalEdges + UIEdgeInsets(top: 100, bottom: 10)
+        XCTAssertEqual(constraints[0].firstAttribute, .trailing)
+        XCTAssertEqual(constraints[0].constant, 0)
+        XCTAssertEqual(constraints[1].firstAttribute, .leading)
+        XCTAssertEqual(constraints[1].constant, 0)
     }
     
     func test_EdgeAnchors_constant() {
@@ -484,6 +586,11 @@ final class CustomOperatorTests: XCTestCase {
     
     func test_EdgeAnchors_Addition_differentInsets() {
         let constraints = view1.edges == view2.edges + UIEdgeInsets(top: 0, left: 10, bottom: 20, right: 30)
+        XCTAssertTrue(constraints[0].firstAttribute == .trailing)
+        XCTAssertTrue(constraints[1].firstAttribute == .leading)
+        XCTAssertTrue(constraints[2].firstAttribute == .top)
+        XCTAssertTrue(constraints[3].firstAttribute == .bottom)
+        
         XCTAssertTrue(constraints[0].constant == 30)
         XCTAssertTrue(constraints[1].constant == 10)
         XCTAssertTrue(constraints[2].constant == 0)
@@ -492,6 +599,11 @@ final class CustomOperatorTests: XCTestCase {
   
     func test_EdgeAnchors_Subtraction_differentInsets() {
         let constraints = view1.edges == view2.edges - UIEdgeInsets(top: 0, left: 10, bottom: 20, right: 30)
+        XCTAssertTrue(constraints[0].firstAttribute == .trailing)
+        XCTAssertTrue(constraints[1].firstAttribute == .leading)
+        XCTAssertTrue(constraints[2].firstAttribute == .top)
+        XCTAssertTrue(constraints[3].firstAttribute == .bottom)
+        
         XCTAssertTrue(constraints[0].constant == -30)
         XCTAssertTrue(constraints[1].constant == -10)
         XCTAssertTrue(constraints[2].constant == 0)

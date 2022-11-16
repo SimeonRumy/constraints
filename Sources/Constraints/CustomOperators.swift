@@ -82,47 +82,41 @@ public func +<A>(lhs: CGFloat, rhs: LayoutBlock<A>) -> LayoutBlock<A> {
 
 //MARK: - Combined Anchors with Insets
 
-public typealias CentreAnchorPair = LayoutAnchorPair<XAxis, YAxis>
-public typealias YAxisAnchorPair = LayoutAnchorPair<YAxis, YAxis>
-public typealias XAxisAnchorPair = LayoutAnchorPair<XAxis,XAxis>
 
-public func +(lhs: LayoutBlock<EdgeAnchors>, rhs: UIEdgeInsets) -> LayoutBlock<EdgeAnchors> {
+public func + (lhs: LayoutBlock<EdgeAnchors>, rhs: UIEdgeInsets) -> LayoutBlock<EdgeAnchors> {
     var newBlock = LayoutBlock(block: lhs)
     newBlock.edgeInsets = rhs
     return newBlock
 }
 
-public func -<EdgeAnchors>(lhs: LayoutBlock<EdgeAnchors>, rhs: UIEdgeInsets) -> LayoutBlock<EdgeAnchors> {
+public func - <EdgeAnchors>(lhs: LayoutBlock<EdgeAnchors>, rhs: UIEdgeInsets) -> LayoutBlock<EdgeAnchors> {
     var newBlock = LayoutBlock(block: lhs)
     newBlock.edgeInsets = UIEdgeInsets(top: -rhs.top, left: -rhs.left, bottom: -rhs.bottom, right: -rhs.right)
     return newBlock
 }
 
 
-public typealias HorizontalInsets = (left: CGFloat, right: CGFloat)
-public typealias VerticalInsets = (top: CGFloat, bottom: CGFloat)
-
-public func +<A: XAxisAnchorPair>(lhs: LayoutBlock<A>, rhs: UIEdgeInsets) -> LayoutBlock<A> {
+public func + (lhs: LayoutBlock<XAxisAnchorPair>, rhs: UIEdgeInsets) -> LayoutBlock<XAxisAnchorPair> {
     var newBlock = LayoutBlock(block: lhs)
-    newBlock.edgePairInsets = HorizontalInsetPair(right: rhs.right, left: rhs.left)
+    newBlock.edgePairInsets = XAxisAnchorPair.Insests(right: rhs.right, left: rhs.left)
     return newBlock
 }
 
-public func -<A: XAxisAnchorPair>(lhs: LayoutBlock<A>, rhs: UIEdgeInsets) -> LayoutBlock<A> {
+public func - (lhs: LayoutBlock<XAxisAnchorPair>, rhs: UIEdgeInsets) -> LayoutBlock<XAxisAnchorPair> {
     var newBlock = LayoutBlock(block: lhs)
-    newBlock.edgePairInsets = HorizontalInsetPair(right: -rhs.right, left: -rhs.left)
+    newBlock.edgePairInsets = XAxisAnchorPair.Insests(right: -rhs.right, left: -rhs.left)
     return newBlock
 }
 
-public func +<A: YAxisAnchorPair>(lhs: LayoutBlock<A>, rhs: UIEdgeInsets) -> LayoutBlock<A> {
+public func + (lhs: LayoutBlock<YAxisAnchorPair>, rhs: UIEdgeInsets) -> LayoutBlock<YAxisAnchorPair> {
     var newBlock = LayoutBlock(block: lhs)
-    newBlock.edgePairInsets = VerticalInsetPair(top: rhs.top, bottom: rhs.bottom)
+    newBlock.edgePairInsets = YAxisAnchorPair.Insests(top: rhs.top, bottom: rhs.bottom)
     return newBlock
 }
 
-public func -<A: YAxisAnchorPair>(lhs: LayoutBlock<A>, rhs: UIEdgeInsets) -> LayoutBlock<A> {
+public func - (lhs: LayoutBlock<YAxisAnchorPair>, rhs: UIEdgeInsets) -> LayoutBlock<YAxisAnchorPair> {
     var newBlock = LayoutBlock(block: lhs)
-    newBlock.edgePairInsets = VerticalInsetPair(top: -rhs.top, bottom: -rhs.bottom)
+    newBlock.edgePairInsets = YAxisAnchorPair.Insests(top: -rhs.top, bottom: -rhs.bottom)
     return newBlock
 }
 
@@ -170,48 +164,46 @@ public func <=<A: Dimension>(lhs: LayoutBlock<A>, rhs: CGFloat) -> NSLayoutConst
 
 // Anchor Pairs
 
-public typealias DimensionAnchorPair = LayoutAnchorPair<Dimension, Dimension>
-
-public func ==<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGFloat) -> [NSLayoutConstraint] {
+public func == (lhs: LayoutBlock<SizeAnchorPair>, rhs: CGFloat) -> [NSLayoutConstraint] {
     [
-        lhs.anchor.anchor1.constraint(equalToConstant: rhs),
-        lhs.anchor.anchor2.constraint(equalToConstant: rhs)
+        lhs.anchor.width.constraint(equalToConstant: rhs),
+        lhs.anchor.height.constraint(equalToConstant: rhs)
     ]
 }
 
-public func >=<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGFloat) -> [NSLayoutConstraint] {
+public func >= (lhs: LayoutBlock<SizeAnchorPair>, rhs: CGFloat) -> [NSLayoutConstraint] {
     [
-        lhs.anchor.anchor1.constraint(greaterThanOrEqualToConstant: rhs),
-        lhs.anchor.anchor2.constraint(greaterThanOrEqualToConstant: rhs)
+        lhs.anchor.width.constraint(greaterThanOrEqualToConstant: rhs),
+        lhs.anchor.height.constraint(greaterThanOrEqualToConstant: rhs)
     ]
 }
 
-public func <=<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGFloat) -> [NSLayoutConstraint] {
+public func <= (lhs: LayoutBlock<SizeAnchorPair>, rhs: CGFloat) -> [NSLayoutConstraint] {
     [
-        lhs.anchor.anchor1.constraint(lessThanOrEqualToConstant: rhs),
-        lhs.anchor.anchor2.constraint(lessThanOrEqualToConstant: rhs)
+        lhs.anchor.width.constraint(lessThanOrEqualToConstant: rhs),
+        lhs.anchor.height.constraint(lessThanOrEqualToConstant: rhs)
     ]
 }
 
 
-public func ==<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGSize) -> [NSLayoutConstraint] {
+public func == (lhs: LayoutBlock<SizeAnchorPair>, rhs: CGSize) -> [NSLayoutConstraint] {
     [
-        lhs.anchor.anchor1.constraint(equalToConstant: rhs.width),
-        lhs.anchor.anchor2.constraint(equalToConstant: rhs.height)
+        lhs.anchor.width.constraint(equalToConstant: rhs.width),
+        lhs.anchor.height.constraint(equalToConstant: rhs.height)
     ]
 }
 
-public func >=<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGSize) -> [NSLayoutConstraint] {
+public func >= (lhs: LayoutBlock<SizeAnchorPair>, rhs: CGSize) -> [NSLayoutConstraint] {
     [
-        lhs.anchor.anchor1.constraint(greaterThanOrEqualToConstant: rhs.width),
-        lhs.anchor.anchor2.constraint(greaterThanOrEqualToConstant: rhs.height)
+        lhs.anchor.width.constraint(greaterThanOrEqualToConstant: rhs.width),
+        lhs.anchor.height.constraint(greaterThanOrEqualToConstant: rhs.height)
     ]
 }
 
-public func <=<A: DimensionAnchorPair>(lhs: LayoutBlock<A>, rhs: CGSize) -> [NSLayoutConstraint] {
+public func <= (lhs: LayoutBlock<SizeAnchorPair>, rhs: CGSize) -> [NSLayoutConstraint] {
     [
-        lhs.anchor.anchor1.constraint(lessThanOrEqualToConstant: rhs.width),
-        lhs.anchor.anchor2.constraint(lessThanOrEqualToConstant: rhs.height)
+        lhs.anchor.width.constraint(lessThanOrEqualToConstant: rhs.width),
+        lhs.anchor.height.constraint(lessThanOrEqualToConstant: rhs.height)
     ]
 }
 
@@ -238,21 +230,21 @@ public func <=<A: LayoutAnchor>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> NSL
 
 // Anchor Pairs
 
-public func ==<A: LayoutAnchors>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> [NSLayoutConstraint] {
+public func ==<A: LayoutAnchorPair>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> [NSLayoutConstraint] {
     let constant = rhs.constant - lhs.constant
     return lhs.anchor.constraint(equalTo: rhs.anchor,
                                  multiplier: rhs.multiplier / lhs.multiplier,
                                  insets: rhs.edgePairInsets ?? GenericInsetPair(constant: constant))
 }
 
-public func >=<A: LayoutAnchors>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> [NSLayoutConstraint] {
+public func >=<A: LayoutAnchorPair>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> [NSLayoutConstraint] {
     let constant = rhs.constant - lhs.constant
     return lhs.anchor.constraint(greaterThanOrEqualTo: rhs.anchor,
                                  multiplier: rhs.multiplier / lhs.multiplier,
                                  insets: rhs.edgePairInsets ?? GenericInsetPair(constant: constant))
 }
 
-public func <=<A: LayoutAnchors>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> [NSLayoutConstraint] {
+public func <=<A: LayoutAnchorPair>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> [NSLayoutConstraint] {
     let constant = rhs.constant - lhs.constant
     return lhs.anchor.constraint(lessThanOrEqualTo: rhs.anchor,
                                  multiplier: rhs.multiplier / lhs.multiplier,
@@ -261,17 +253,23 @@ public func <=<A: LayoutAnchors>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> [N
 
 // Edge Anchors
 
-public func ==<A: LayoutAnchorGroup>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> [NSLayoutConstraint] {
-    lhs.anchor.constraint(equalTo: rhs.anchor, multiplier: rhs.multiplier / lhs.multiplier, insets: rhs.edgeInsets ?? .init(constant: rhs.constant - lhs.constant))
+public func == (lhs: LayoutBlock<EdgeAnchors>, rhs: LayoutBlock<EdgeAnchors>) -> [NSLayoutConstraint] {
+    lhs.anchor.constraint(equalTo: rhs.anchor,
+                          multiplier: rhs.multiplier / lhs.multiplier,
+                          insets: rhs.edgeInsets ?? .init(constant: rhs.constant - lhs.constant))
 }
 
-public func >=<A: LayoutAnchorGroup>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> [NSLayoutConstraint] {
+public func >= (lhs: LayoutBlock<EdgeAnchors>, rhs: LayoutBlock<EdgeAnchors>) -> [NSLayoutConstraint] {
     
-    lhs.anchor.constraint(greaterThanOrEqualTo: rhs.anchor, multiplier: rhs.multiplier / lhs.multiplier, insets: rhs.edgeInsets ?? .init(constant: rhs.constant - lhs.constant))
+    lhs.anchor.constraint(greaterThanOrEqualTo: rhs.anchor,
+                          multiplier: rhs.multiplier / lhs.multiplier,
+                          insets: rhs.edgeInsets ?? .init(constant: rhs.constant - lhs.constant))
 }
 
-public func <=<A: LayoutAnchorGroup>(lhs: LayoutBlock<A>, rhs: LayoutBlock<A>) -> [NSLayoutConstraint] {
-    lhs.anchor.constraint(lessThanOrEqualTo: rhs.anchor, multiplier: rhs.multiplier / lhs.multiplier, insets: rhs.edgeInsets ?? .init(constant: rhs.constant - lhs.constant))
+public func <= (lhs: LayoutBlock<EdgeAnchors>, rhs: LayoutBlock<EdgeAnchors>) -> [NSLayoutConstraint] {
+    lhs.anchor.constraint(lessThanOrEqualTo: rhs.anchor,
+                          multiplier: rhs.multiplier / lhs.multiplier,
+                          insets: rhs.edgeInsets ?? .init(constant: rhs.constant - lhs.constant))
 }
 
 //MARK: - Priority

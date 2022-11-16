@@ -205,6 +205,8 @@ button.height == 100 // returns NSLayoutConstraint
 button.size == 100 // returns [NSLayoutConstraint]
 ```
 
+#### Batching
+
 Constraint Builder uses Results Builders to provide a simple API to batch together single constraints with arrays of constraints returned my composite anchors.
 
 ```swift
@@ -273,7 +275,7 @@ Simeon Rumyannikov
 
 ## License
 
-This project is shiped under the MIT lices
+This project is shipped under the MIT license
 
 
 

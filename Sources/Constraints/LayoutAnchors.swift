@@ -65,23 +65,14 @@ extension NSLayoutAnchor: LayoutAnchor {}
 
 //MARK: - Anchor Pair
 
-/// Similar to LayoutAnchor (signular), but each method can return multiple constraints.
-/// Designed to be a common interface for  types containing more than one anchor. Ex: AnchorPair
-public protocol LayoutAnchors {
-    func constraint(equalTo anchor: Self, multiplier: CGFloat, insets: EdgeInsetPair) -> [NSLayoutConstraint]
-    func constraint(greaterThanOrEqualTo anchor: Self, multiplier: CGFloat, insets: EdgeInsetPair) -> [NSLayoutConstraint]
-    func constraint(lessThanOrEqualTo anchor: Self, multiplier: CGFloat, insets: EdgeInsetPair) -> [NSLayoutConstraint]
-}
 
-public class LayoutAnchorPair<T: LayoutAnchor, R: LayoutAnchor> {
-
-    var anchor1: T
-    var anchor2: R
+public protocol LayoutAnchorPair {
+    associatedtype Insests: EdgeInsetPair
+    associatedtype Anchor1 where Anchor1: LayoutAnchor
+    associatedtype Anchor2 where Anchor2: LayoutAnchor
     
-    init(anchor1: T, anchor2: R) {
-        self.anchor1 = anchor1
-        self.anchor2 = anchor2
-    }
+    var anchor1: Anchor1 { get }
+    var anchor2: Anchor2 { get }
 }
 
 public protocol EdgeInsetPair {
@@ -89,41 +80,12 @@ public protocol EdgeInsetPair {
     var constant2: CGFloat { get }
 }
 
-struct HorizontalInsetPair: EdgeInsetPair {
-    
-    let right: CGFloat
-    let left: CGFloat
-    
-    var constant1: CGFloat {
-        return right
-    }
-    
-    var constant2: CGFloat {
-        return left
-    }
-    
-}
 
-struct VerticalInsetPair: EdgeInsetPair {
+public struct GenericInsetPair: EdgeInsetPair {
     
-    let top: CGFloat
-    let bottom: CGFloat
+    public var constant1: CGFloat
     
-    var constant1: CGFloat {
-        return top
-    }
-    
-    var constant2: CGFloat {
-        return bottom
-    }
-    
-}
-
-struct GenericInsetPair: EdgeInsetPair {
-    
-    var constant1: CGFloat
-    
-    var constant2: CGFloat
+    public var constant2: CGFloat
     
     init(constant1: CGFloat, constant2: CGFloat) {
         self.constant1 = constant1
@@ -136,16 +98,16 @@ struct GenericInsetPair: EdgeInsetPair {
     
 }
 
-extension LayoutAnchorPair: LayoutAnchors {
+extension LayoutAnchorPair  {
 
-    public func constraint(equalTo anchor: LayoutAnchorPair, multiplier: CGFloat,  insets: EdgeInsetPair) -> [NSLayoutConstraint] {
+    public func constraint(equalTo anchor: Self, multiplier: CGFloat,  insets: EdgeInsetPair) -> [NSLayoutConstraint] {
         [
             self.anchor1.constraint(equalTo: anchor.anchor1, multiplier: multiplier, constant: insets.constant1),
             self.anchor2.constraint(equalTo: anchor.anchor2, multiplier: multiplier, constant: insets.constant2),
         ]
     }
 
-    public func constraint(greaterThanOrEqualTo anchor: LayoutAnchorPair, multiplier: CGFloat,  insets: EdgeInsetPair) -> [NSLayoutConstraint] {
+    public func constraint(greaterThanOrEqualTo anchor: Self, multiplier: CGFloat,  insets: EdgeInsetPair) -> [NSLayoutConstraint] {
         [
             self.anchor1.constraint(greaterThanOrEqualTo: anchor.anchor1, multiplier: multiplier, constant: insets.constant1),
             self.anchor2.constraint(greaterThanOrEqualTo: anchor.anchor2, multiplier: multiplier, constant: insets.constant2),
@@ -153,7 +115,7 @@ extension LayoutAnchorPair: LayoutAnchors {
     }
 
 
-    public func constraint(lessThanOrEqualTo anchor: LayoutAnchorPair, multiplier: CGFloat, insets: EdgeInsetPair) -> [NSLayoutConstraint] {
+    public func constraint(lessThanOrEqualTo anchor: Self, multiplier: CGFloat, insets: EdgeInsetPair) -> [NSLayoutConstraint] {
         [
             self.anchor1.constraint(lessThanOrEqualTo: anchor.anchor1, multiplier: multiplier, constant: insets.constant1),
             self.anchor2.constraint(lessThanOrEqualTo: anchor.anchor2, multiplier: multiplier, constant: insets.constant2),
@@ -166,11 +128,11 @@ extension LayoutAnchorPair: LayoutAnchors {
 //MARK: - Edge Anchors 
 
 
-public protocol LayoutAnchorGroup {
-    func constraint(equalTo anchor: Self, multiplier: CGFloat, insets: UIEdgeInsets) -> [NSLayoutConstraint]
-    func constraint(greaterThanOrEqualTo anchor: Self, multiplier: CGFloat, insets: UIEdgeInsets) -> [NSLayoutConstraint]
-    func constraint(lessThanOrEqualTo anchor: Self, multiplier: CGFloat, insets: UIEdgeInsets) -> [NSLayoutConstraint]
-}
+//public protocol LayoutAnchorGroup {
+//    func constraint(equalTo anchor: Self, multiplier: CGFloat, insets: UIEdgeInsets) -> [NSLayoutConstraint]
+//    func constraint(greaterThanOrEqualTo anchor: Self, multiplier: CGFloat, insets: UIEdgeInsets) -> [NSLayoutConstraint]
+//    func constraint(lessThanOrEqualTo anchor: Self, multiplier: CGFloat, insets: UIEdgeInsets) -> [NSLayoutConstraint]
+//}
 
 
 public struct EdgeAnchors {
@@ -184,7 +146,7 @@ public struct EdgeAnchors {
     }
 }
 
-extension EdgeAnchors: LayoutAnchorGroup {
+extension EdgeAnchors {
     
 
     public func constraint(equalTo anchor: EdgeAnchors, multiplier: CGFloat,  insets: UIEdgeInsets) -> [NSLayoutConstraint] {
@@ -215,13 +177,13 @@ extension EdgeAnchors: LayoutAnchorGroup {
 
 
 extension UIEdgeInsets {
-    func horizontalInsets() -> HorizontalInsetPair {
-        HorizontalInsetPair(right: self.right, left: self.left)
+    func horizontalInsets() -> XAxisAnchorPair.HorizontalInsetPair {
+        XAxisAnchorPair.HorizontalInsetPair(right: self.right, left: self.left)
     }
 }
 
 extension UIEdgeInsets {
-    func verticalInsets() -> VerticalInsetPair {
-        VerticalInsetPair(top: self.top, bottom: self.bottom)
+    func verticalInsets() -> YAxisAnchorPair.VerticalInsetPair {
+        YAxisAnchorPair.VerticalInsetPair(top: self.top, bottom: self.bottom)
     }
 }

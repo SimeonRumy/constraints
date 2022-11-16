@@ -49,17 +49,17 @@ public extension View {
     var lastBaseline: LayoutBlock<YAxis> { LayoutBlock(anchor: self.lastBaselineAnchor) }
 
     // combinedAnchors
-    var size: LayoutBlock<LayoutAnchorPair<Dimension, Dimension>> {
-        LayoutBlock(anchor: LayoutAnchorPair(anchor1: width.anchor, anchor2: height.anchor))
+    var size: LayoutBlock<SizeAnchorPair> {
+        LayoutBlock(anchor: SizeAnchorPair(width: width.anchor, height: height.anchor))
     }
-    var centerXY: LayoutBlock<CentreAnchorPair> {
-        LayoutBlock(anchor: LayoutAnchorPair(anchor1: centerX.anchor, anchor2: centerY.anchor))
+    var centerXY: LayoutBlock<CenterAnchorPair> {
+        LayoutBlock(anchor: CenterAnchorPair(centerY: centerY.anchor, centerX: centerX.anchor))
     }
     var horizontalEdges: LayoutBlock<XAxisAnchorPair> {
-        LayoutBlock(anchor: LayoutAnchorPair(anchor1: leading.anchor,anchor2: trailing.anchor))
+        LayoutBlock(anchor: XAxisAnchorPair(leading: leading.anchor,trailing: trailing.anchor))
     }
     var verticalEdges: LayoutBlock<YAxisAnchorPair> {
-        LayoutBlock(anchor: LayoutAnchorPair(anchor1: top.anchor, anchor2: bottom.anchor))
+        LayoutBlock(anchor: YAxisAnchorPair(top: top.anchor, bottom: bottom.anchor))
     }
     var edges: LayoutBlock<EdgeAnchors> { LayoutBlock(anchor: EdgeAnchors( xAxis: horizontalEdges.anchor, yAxis: verticalEdges.anchor)) }
 
