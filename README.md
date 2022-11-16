@@ -8,19 +8,20 @@
 [![Stars](https://img.shields.io/github/stars/SimeonRumy/constraints?style=social)](https://img.shields.io/github/stars/SimeonRumy/constraints?style=social)
 
 
+\
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <!-- <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
-    <span style="font-size: 100px">🏗️</span>
+    <img src="Resources/images/building_construction.png" alt="Logo" width="80" height="80">
+    <!-- <h1 style="font-size: 100px">🏗️</h1> -->
   </a>
 
 <h3 align="center">Constraint Builder</h3>
 
   <p align="center">
-    A simiple Auto Layout DSL
+    A simple Auto Layout DSL
     <!-- <br />
     <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br /> -->
@@ -41,7 +42,7 @@
     <li>
       <a href="#about-the-project">About The Project</a>
     <li><a href="#usage">Usage</a></li>
-        <ul><a href="#aligment">Aligment</a></ul>
+        <ul><a href="#alignment">Alignment</a></ul>
         <ul><a href="#size">Size</a></ul>
         <ul><a href="#Batching and Activating Constraints">Batching and Activating Constraints</a></ul>
     <li><a href="#license">License</a></li>
@@ -53,7 +54,7 @@
 
 ## About The Project
 
-This DSL aims to make writing and reading constraints more intuative by making intent clear and removing boilerplate code. Result builders are used to make constraint batching and activation easier and more efficient.
+This DSL aims to make writing and reading constraints more intuitive by making intent clear and removing boilerplate code. Result builders are used to make constraint batching and activation easier and more efficient.
 
 A single constraint can be defined like so:
 
@@ -105,24 +106,26 @@ edges           | leading, trailing, top, bottom
 
 ### Relations
 
-Relations are expresed using swift operators:
+Relations are expressed using swift operators:
 
 ```swift
 == // NSLayoutConstraint.Relation.equal
 => // NSLayoutConstraint.Relation.greaterThanOrEqual
-<= //NSLayoutConstraint.Relation.lessThanOrEqual   
+<= // NSLayoutConstraint.Relation.lessThanOrEqual   
 ```
  
-### Aligment
+### Alignment
+
+#### Aligning Edges
 
 ```swift
 button.leading == button2.trailing + 10   
-// which is equivlant to both:
 button.leading - 10 == button2.trailing 
 button.leading == 10 + button2.trailing
+// these expressions result in equivalent constraints
 ```
 
-The same mathematical rules apply to multipliers which allow us to express relative aligment:
+The same mathematical rules apply to multipliers which allow us to express relative alignment:
 
 ```swift
 button.leading == 2 * button2.trailing / 3 
@@ -153,6 +156,8 @@ view.verticalEdges == superview.verticalEdges
 view.edges == superview.edges
 ```
 
+Note: composite edge anchors use leading and trailing anchors under the hood because those are recommended as the default choice.
+
 #### Insets with composite anchors
 
 Composite Anchors also support setting insets.
@@ -160,7 +165,8 @@ Composite Anchors also support setting insets.
 ```swift
 view1.edges == view2.edges + UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 view1.horizontalEdges == 10
-view1.horizontalEdges == view2.horizontalEdges + UIEdgeInsets(left: 10, right: 10)
+view1.horizontalEdges == view2.horizontalEdges + UIEdgeInsets(left: 10, right: 10) 
+// this DSL provides a shortend init method
 ```
 
 ### Size
@@ -189,7 +195,9 @@ button.size == 100 // square
 
 ### Batching and Activating Constraints
 
-Constraints are not activated individually by default because that is not efficient and can slow down view rendering. Multiple constraints should be activated using ```NSLayoutConstraint.activate([])``` according to Apple . Therefore, we need an intuitive way to batch and activate constraints.
+Constraints are not activated individually by default because that is not efficient and can slow down view rendering. Multiple constraints should be activated using ```NSLayoutConstraint.activate([])``` according to Apple.
+
+Therefore, we need an intuitive way to batch and activate constraints.
 
 
 ```swift
@@ -197,7 +205,7 @@ button.height == 100 // returns NSLayoutConstraint
 button.size == 100 // returns [NSLayoutConstraint]
 ```
 
-Constraint Builder uses Results Builders to provide a simple simple API to batch together single constraints with arrays of constraints returned my composite anchors.
+Constraint Builder uses Results Builders to provide a simple API to batch together single constraints with arrays of constraints returned my composite anchors.
 
 ```swift
 Constraints {
@@ -208,7 +216,8 @@ Constraints {
 
 #### Activation
 
-You can activate an individual or an array of constraints using the ```.activate()``` method. This calls ```NSLayoutConstraint.activate([])``` under the hood ensuring performance. 
+You can activate an individual or an array of constraints using the ```.activate()``` method. 
+This uses ```NSLayoutConstraint.activate([])``` under the hood ensuring performance. 
 
 
 ```swift
@@ -243,7 +252,7 @@ Constraints {
 
 ### Priority
 
-Set priority on individual constraints using ~ operator
+Set priority on individual constraints using ```~``` operator
 ```swift
 view1.top == view2.top + 20 ~ .required
 view1.bottom == view2.bottom + 20 ~ .priority(500) // set custom priority
