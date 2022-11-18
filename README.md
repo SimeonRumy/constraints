@@ -97,7 +97,7 @@ NSLayoutConstraint.activate([
 
 Try this instead:
 
-<!-- <img style="float: right;" src="Resources/images/screenshot.png" width="200"> -->
+
 
 ```swift
 Constraints {
@@ -113,13 +113,18 @@ Constraints {
 }.activate()
 ```
 
+Both generate:
+
+<img style="float: right;" src="Resources/images/screenshot.png" width="200">
+
 
 
 ## Usage 
 
 ### Basic Anchors
 
-Constraint Builder provides a wrapper over the LayoutAnchor API. Basic anchors consist off:
+Constraint Builder provides a wrapper over the LayoutAnchor API. 
+Basic anchors consist off:
 
 * top
 * bottom 
