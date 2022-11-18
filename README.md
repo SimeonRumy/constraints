@@ -113,10 +113,11 @@ Constraints {
 }.activate()
 ```
 
-Both generate:
+Yet both generate the same thing:
 
-<img style="float: right;" src="Resources/images/screenshot.png" width="200">
-
+<div align="center">
+    <img src="Resources/images/screenshot.png" width="300">
+</div>
 
 
 ## Usage 
