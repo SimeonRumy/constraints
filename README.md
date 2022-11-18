@@ -94,8 +94,11 @@ NSLayoutConstraint.activate([
 ])
 ```
 
-Try this instead:
-
+<div align="center">
+    <div>
+        <img src="Resources/images/screenshot.png" width="250">
+    </div>
+</div>
 
 
 ```swift
@@ -112,13 +115,6 @@ Constraints {
 }.activate()
 ```
 
-Yet both generate the same thing:
-
-<div align="center">
-    <div>
-        <img src="Resources/images/screenshot.png" width="300">
-    </div>
-</div>
 
 
 ## Usage 
