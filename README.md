@@ -41,7 +41,7 @@
     <li><a href="#usage">Usage</a></li>
         <ul><a href="#alignment">Alignment</a></ul>
         <ul><a href="#size">Size</a></ul>
-        <ul><a href="#Batching and Activating Constraints">Batching and Activating Constraints</a></ul>
+        <ul><a href="#size">Batching and Activating Constraints</a></ul>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -85,9 +85,8 @@ NSLayoutConstraint.activate([
     view3.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
     view3.heightAnchor.constraint(equalTo: view1.heightAnchor, multiplier: 0.5),
     view3.widthAnchor.constraint(equalTo: view1.widthAnchor, multiplier: 0.5),
-    NSLayoutConstraint(item: view3, attribute: .centerX, 
-                        relatedBy: .equal, toItem: view1, 
-                        attribute: .trailing, multiplier: 1/3, constant: 0),
+    NSLayoutConstraint(item: view3, attribute: .centerX, relatedBy: .equal, 
+                       toItem: view1, attribute: .trailing, multiplier: 1/3, constant: 0),
     view4.trailingAnchor.constraint(equalTo: view3.trailingAnchor, constant: 10),
     view4.leadingAnchor.constraint(equalTo: view3.leadingAnchor, constant: -10),
     view4.topAnchor.constraint(equalTo: view2.bottomAnchor, constant: 50),
@@ -116,7 +115,9 @@ Constraints {
 Yet both generate the same thing:
 
 <div align="center">
-    <img src="Resources/images/screenshot.png" width="300">
+    <div>
+        <img src="Resources/images/screenshot.png" width="300">
+    </div>
 </div>
 
 
