@@ -1,13 +1,12 @@
 # Constraint Builder
 
-
+<div align="center">
 
 [![License](https://img.shields.io/badge/license-MIT-green)](https://img.shields.io/badge/license-MIT-green)
 [![Swift 5.7](https://img.shields.io/badge/Swift-5.4%20+%205.7-orange.svg)](https://swift.org)
 [![Code Coverage](https://img.shields.io/badge/coverage-97.4%25-green?style=flat)](https://img.shields.io/badge/coverage-97.4%25-green?style=flat)
-[![Stars](https://img.shields.io/github/stars/SimeonRumy/constraints?style=social)](https://img.shields.io/github/stars/SimeonRumy/constraints?style=social)
-
-
+<!-- [![Stars](https://img.shields.io/github/stars/SimeonRumy/constraints?style=social)](https://img.shields.io/github/stars/SimeonRumy/constraints?style=social) -->
+</div>
 
 <!-- PROJECT LOGO -->
 <br />
@@ -98,19 +97,17 @@ NSLayoutConstraint.activate([
 
 Try this instead:
 
-<img style="float: right;" src="Resources/images/screenshot.png" width="100">
+<!-- <img style="float: right;" src="Resources/images/screenshot.png" width="200"> -->
 
 ```swift
 Constraints {
     view.centerXY == view1.centerXY
     view1.size == 200
-    view2.edges == view1.edges 
-        + UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    view2.edges == view1.edges + UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     view3.bottom == view.safeAreaLayoutGuide.bottom
     view3.size == view1.size / 2
     view3.centerX == view.trailing / 3
-    view4.horizontalEdges == view3.horizontalEdges 
-        + UIEdgeInsets(left: 10, right: 10)
+    view4.horizontalEdges == view3.horizontalEdges + UIEdgeInsets(left: 10, right: 10)
     view4.top == view2.bottom + 50
     view4.height == 100
 }.activate()
@@ -208,12 +205,21 @@ Note: composite edge anchors use leading and trailing anchors under the hood bec
 
 Composite Anchors also support setting insets.
 
+<div align="center">
+    <img src="Resources/images/insets_vs_shifting.png" height="200">
+    <p>Right: Shift of 40. Right: Inset of 40.</p>
+</div>
+
+When it comes to using composite anchors, setting insets is more useful compared to 'shifting'. 
+
 ```swift
 view1.edges == view2.edges + UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 view1.horizontalEdges == 10
 view1.horizontalEdges == view2.horizontalEdges + UIEdgeInsets(left: 10, right: 10) 
 // this DSL provides a shortened init method
 ```
+
+Constraint Builder automatically negates some of the constants when you provide a UIEdgeInsets object.
 
 ### Size
 
@@ -335,63 +341,6 @@ This project is shipped under the MIT license
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-
-
-## Notes
-
-
-Introduced in Swift 5.4 result builders (also known as function builders) allow you to build up a result using 'build blocks'.
-
-This package uses result builders to create a 'Constraints Builder' which takes multiple NSLayoutConstraint and outputs an array of NSLayoutConstraints.
-
-```swift
-
-Constraints {
-    view.heightAnchor.constraint(equalTo: view2.heightAnchor, multiplier: 1)
-    view.widthAnchor.constraint(equalToConstant: 200)
-    view.centerXAnchor.constraint(equalTo: view2.centerXAnchor)
-    view.centerYAnchor.constraint(equalTo: view2.centerYAnchor)
-}
-
-```
-
-
-
-Using included extensions on NSLayoutConstraint we can activate constraints all at once and add priority.
-
-```swift
-
-Constraints {
-    view.heightAnchor.constraint(equalTo: view2.heightAnchor, multiplier: 1)
-    view.widthAnchor.constraint(equalToConstant: 200)
-    view2.centerXAnchor.constraint(equalTo: view.centerXAnchor).setPriority(999)
-    
-}.activate()
-
-
-```
-
-An alternative way is to create an array of constraints instead.
-
-```swift
-
-[
-    view.heightAnchor.constraint(equalTo: view2.heightAnchor, multiplier: 1),
-    view.widthAnchor.constraint(equalToConstant: 200),
-    view2.centerXAnchor.constraint(equalTo: view.centerXAnchor).setPriority(999),
-    
-].activate()
-
-
-```
-
-Using function builders offers 3 minor advantages.
-
-1. No need to keep track of commas. Can be annoying when adding a lot of constraints.
-2. The keyword 'Constraints' allows us to quickly find the constraints using Cmd+F.
-3. Opens up further potential for improving the way constraints configured.
 
 
 I have built a fully functional and tested Auto Layout with some of Swifts newest features, documenting the process. 
