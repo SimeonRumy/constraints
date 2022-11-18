@@ -36,7 +36,7 @@ import UIKit
 
 public struct CenterAnchorPair: LayoutAnchorPair {
     
-    public typealias Insests = GenericInsetPair
+    public typealias Insets = GenericInsetPair
 
     
     public var anchor1: YAxis {

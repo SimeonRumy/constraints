@@ -33,7 +33,7 @@ import UIKit
 
 public struct YAxisAnchorPair: LayoutAnchorPair {
     
-    public typealias Insests = VerticalInsetPair
+    public typealias Insets = VerticalInsetPair
     
     public struct VerticalInsetPair: EdgeInsetPair {
         
@@ -41,7 +41,7 @@ public struct YAxisAnchorPair: LayoutAnchorPair {
         let bottom: CGFloat
         
         public var constant1: CGFloat {
-            return top
+            return -top
         }
         
         public var constant2: CGFloat {

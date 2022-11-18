@@ -513,18 +513,20 @@ final class CustomOperatorTests: XCTestCase {
     
     func test_VerticalEdgeAnchors_equalPositiveInsets() {
         let constraints = view1.verticalEdges == view2.verticalEdges + UIEdgeInsets(top: 10, bottom: 10)
-        XCTAssertTrue(constraints.allSatisfy { $0.constant == 10 })
+        XCTAssertTrue(constraints[0].constant == -10)
+        XCTAssertTrue(constraints[1].constant == 10)
     }
     
     func test_VerticalEdgeAnchors_equalNegativeInsets() {
         let constraints = view1.verticalEdges == view2.verticalEdges - UIEdgeInsets(top: 10, bottom: 10)
-        XCTAssertTrue(constraints.allSatisfy { $0.constant == -10 })
+        XCTAssertTrue(constraints[0].constant == 10)
+        XCTAssertTrue(constraints[1].constant == -10)
     }
     
     func test_VerticalEdgeAnchors_differentInsets() {
         let constraints = view1.verticalEdges == view2.verticalEdges + UIEdgeInsets(top: 100, bottom: 10)
         XCTAssertEqual(constraints[0].firstAttribute, .top)
-        XCTAssertEqual(constraints[0].constant, 100)
+        XCTAssertEqual(constraints[0].constant, -100)
         XCTAssertEqual(constraints[1].firstAttribute, .bottom)
         XCTAssertEqual(constraints[1].constant, 10)
     }
@@ -544,12 +546,14 @@ final class CustomOperatorTests: XCTestCase {
     
     func test_HorizontallEdgeAnchors_insets() {
         let constraints = view1.horizontalEdges == view2.horizontalEdges + UIEdgeInsets(left: 10, right: 10)
-        XCTAssertTrue(constraints.allSatisfy { $0.constant == 10 })
+        XCTAssertTrue(constraints[0].constant == 10)
+        XCTAssertTrue(constraints[1].constant == -10)
     }
     
     func test_HorizontalEdgeAnchors_equalNegativeInsets() {
         let constraints = view1.horizontalEdges == view2.horizontalEdges - UIEdgeInsets(left: 10, right: 10)
-        XCTAssertTrue(constraints.allSatisfy { $0.constant == -10 })
+        XCTAssertTrue(constraints[0].constant == -10)
+        XCTAssertTrue(constraints[1].constant == 10)
     }
     
     func test_HorizontalEdgeAnchors_differentInsets() {
@@ -557,7 +561,7 @@ final class CustomOperatorTests: XCTestCase {
         XCTAssertEqual(constraints[0].firstAttribute, .trailing)
         XCTAssertEqual(constraints[0].constant, 10)
         XCTAssertEqual(constraints[1].firstAttribute, .leading)
-        XCTAssertEqual(constraints[1].constant, 100)
+        XCTAssertEqual(constraints[1].constant, -100)
     }
     
     func test_HorizontalEdgeAnchors_differentInsets_inccorectInsetLabel() {
@@ -576,37 +580,44 @@ final class CustomOperatorTests: XCTestCase {
     
     func test_EdgeAnchors_Addition_equalInsets() {
         let constraints = view1.edges == view2.edges + UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        XCTAssertTrue(constraints.allSatisfy { $0.constant == 10 })
+        
+        XCTAssertTrue(constraints[0].constant == 10)
+        XCTAssertTrue(constraints[1].constant == -10)
+        XCTAssertTrue(constraints[2].constant == -10)
+        XCTAssertTrue(constraints[3].constant == 10)
     }
     
     func test_EdgeAnchors_Subtraction_equalInsets() {
         let constraints = view1.edges == view2.edges - UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        XCTAssertTrue(constraints.allSatisfy { $0.constant == -10 })
+        XCTAssertTrue(constraints[0].constant == -10)
+        XCTAssertTrue(constraints[1].constant == 10)
+        XCTAssertTrue(constraints[2].constant == 10)
+        XCTAssertTrue(constraints[3].constant == -10)
     }
     
     func test_EdgeAnchors_Addition_differentInsets() {
-        let constraints = view1.edges == view2.edges + UIEdgeInsets(top: 0, left: 10, bottom: 20, right: 30)
+        let constraints = view1.edges == view2.edges + UIEdgeInsets(top: 5, left: 10, bottom: 20, right: 30)
         XCTAssertTrue(constraints[0].firstAttribute == .trailing)
         XCTAssertTrue(constraints[1].firstAttribute == .leading)
         XCTAssertTrue(constraints[2].firstAttribute == .top)
         XCTAssertTrue(constraints[3].firstAttribute == .bottom)
         
         XCTAssertTrue(constraints[0].constant == 30)
-        XCTAssertTrue(constraints[1].constant == 10)
-        XCTAssertTrue(constraints[2].constant == 0)
+        XCTAssertTrue(constraints[1].constant == -10)
+        XCTAssertTrue(constraints[2].constant == -5)
         XCTAssertTrue(constraints[3].constant == 20)
     }
   
     func test_EdgeAnchors_Subtraction_differentInsets() {
-        let constraints = view1.edges == view2.edges - UIEdgeInsets(top: 0, left: 10, bottom: 20, right: 30)
+        let constraints = view1.edges == view2.edges - UIEdgeInsets(top: 5, left: 10, bottom: 20, right: 30)
         XCTAssertTrue(constraints[0].firstAttribute == .trailing)
         XCTAssertTrue(constraints[1].firstAttribute == .leading)
         XCTAssertTrue(constraints[2].firstAttribute == .top)
         XCTAssertTrue(constraints[3].firstAttribute == .bottom)
         
         XCTAssertTrue(constraints[0].constant == -30)
-        XCTAssertTrue(constraints[1].constant == -10)
-        XCTAssertTrue(constraints[2].constant == 0)
+        XCTAssertTrue(constraints[1].constant == 10)
+        XCTAssertTrue(constraints[2].constant == 5)
         XCTAssertTrue(constraints[3].constant == -20)
     }
 

@@ -34,7 +34,7 @@ import UIKit
 
 public struct SizeAnchorPair: LayoutAnchorPair {
     
-    public typealias Insests = GenericInsetPair
+    public typealias Insets = GenericInsetPair
 
     
     public var anchor1: Dimension {

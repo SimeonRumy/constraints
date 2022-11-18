@@ -34,7 +34,7 @@ import UIKit
 
 public struct XAxisAnchorPair: LayoutAnchorPair {
     
-    public typealias Insests = HorizontalInsetPair
+    public typealias Insets = HorizontalInsetPair
     
     public struct HorizontalInsetPair: EdgeInsetPair {
         
@@ -46,7 +46,7 @@ public struct XAxisAnchorPair: LayoutAnchorPair {
         }
         
         public var constant2: CGFloat {
-            return left
+            return -left
         }
         
     }

@@ -98,25 +98,25 @@ public func - <EdgeAnchors>(lhs: LayoutBlock<EdgeAnchors>, rhs: UIEdgeInsets) ->
 
 public func + (lhs: LayoutBlock<XAxisAnchorPair>, rhs: UIEdgeInsets) -> LayoutBlock<XAxisAnchorPair> {
     var newBlock = LayoutBlock(block: lhs)
-    newBlock.edgePairInsets = XAxisAnchorPair.Insests(right: rhs.right, left: rhs.left)
+    newBlock.edgePairInsets = XAxisAnchorPair.Insets(right: rhs.right, left: rhs.left)
     return newBlock
 }
 
 public func - (lhs: LayoutBlock<XAxisAnchorPair>, rhs: UIEdgeInsets) -> LayoutBlock<XAxisAnchorPair> {
     var newBlock = LayoutBlock(block: lhs)
-    newBlock.edgePairInsets = XAxisAnchorPair.Insests(right: -rhs.right, left: -rhs.left)
+    newBlock.edgePairInsets = XAxisAnchorPair.Insets(right: -rhs.right, left: -rhs.left)
     return newBlock
 }
 
 public func + (lhs: LayoutBlock<YAxisAnchorPair>, rhs: UIEdgeInsets) -> LayoutBlock<YAxisAnchorPair> {
     var newBlock = LayoutBlock(block: lhs)
-    newBlock.edgePairInsets = YAxisAnchorPair.Insests(top: rhs.top, bottom: rhs.bottom)
+    newBlock.edgePairInsets = YAxisAnchorPair.Insets(top: rhs.top, bottom: rhs.bottom)
     return newBlock
 }
 
 public func - (lhs: LayoutBlock<YAxisAnchorPair>, rhs: UIEdgeInsets) -> LayoutBlock<YAxisAnchorPair> {
     var newBlock = LayoutBlock(block: lhs)
-    newBlock.edgePairInsets = YAxisAnchorPair.Insests(top: -rhs.top, bottom: -rhs.bottom)
+    newBlock.edgePairInsets = YAxisAnchorPair.Insets(top: -rhs.top, bottom: -rhs.bottom)
     return newBlock
 }
 
@@ -289,7 +289,7 @@ public func ~(lhs: [NSLayoutConstraint], rhs: UILayoutPriority) -> [NSLayoutCons
 
 public extension UIEdgeInsets {
     init(constant: CGFloat) {
-        self.init(top: constant, left: constant, bottom: constant, right: constant)
+        self.init(top: -constant, left: -constant, bottom: constant, right: constant)
     }
     
     init(left: CGFloat, right: CGFloat) {

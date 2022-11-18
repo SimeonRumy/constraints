@@ -61,7 +61,9 @@ public extension View {
     var verticalEdges: LayoutBlock<YAxisAnchorPair> {
         LayoutBlock(anchor: YAxisAnchorPair(top: top.anchor, bottom: bottom.anchor))
     }
-    var edges: LayoutBlock<EdgeAnchors> { LayoutBlock(anchor: EdgeAnchors( xAxis: horizontalEdges.anchor, yAxis: verticalEdges.anchor)) }
+    var edges: LayoutBlock<EdgeAnchors> {
+        LayoutBlock(anchor: EdgeAnchors( xAxis: horizontalEdges.anchor, yAxis: verticalEdges.anchor))
+    }
 
     
 
