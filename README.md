@@ -74,26 +74,26 @@ Tired of this?
 <img style="float: right;" src="Resources/images/screenshot.png" width="240">
 
 ```swift
-    NSLayoutConstraint.activate([
-        view.centerYAnchor.constraint(equalTo: view1.centerYAnchor),
-        view.centerXAnchor.constraint(equalTo: view1.centerXAnchor),
-        view1.heightAnchor.constraint(equalToConstant: 200),
-        view1.widthAnchor.constraint(equalToConstant: 200),
-        view2.topAnchor.constraint(equalTo: view1.topAnchor, constant: -10),
-        view2.bottomAnchor.constraint(equalTo: view1.bottomAnchor, constant: 10),
-        view2.leadingAnchor.constraint(equalTo: view1.leadingAnchor, constant: -10),
-        view2.trailingAnchor.constraint(equalTo: view1.trailingAnchor, constant: 10),
-        view3.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-        view3.heightAnchor.constraint(equalTo: view1.heightAnchor, multiplier: 0.5),
-        view3.widthAnchor.constraint(equalTo: view1.widthAnchor, multiplier: 0.5),
-        NSLayoutConstraint(item: view3, attribute: .centerX, 
-                           relatedBy: .equal, toItem: view1, 
-                           attribute: .trailing, multiplier: 1/3, constant: 0),
-        view4.trailingAnchor.constraint(equalTo: view3.trailingAnchor, constant: 10),
-        view4.leadingAnchor.constraint(equalTo: view3.leadingAnchor, constant: -10),
-        view4.topAnchor.constraint(equalTo: view2.bottomAnchor, constant: 50),
-        view4.heightAnchor.constraint(equalToConstant: 100),
-    ])
+NSLayoutConstraint.activate([
+    view.centerYAnchor.constraint(equalTo: view1.centerYAnchor),
+    view.centerXAnchor.constraint(equalTo: view1.centerXAnchor),
+    view1.heightAnchor.constraint(equalToConstant: 200),
+    view1.widthAnchor.constraint(equalToConstant: 200),
+    view2.topAnchor.constraint(equalTo: view1.topAnchor, constant: -10),
+    view2.bottomAnchor.constraint(equalTo: view1.bottomAnchor, constant: 10),
+    view2.leadingAnchor.constraint(equalTo: view1.leadingAnchor, constant: -10),
+    view2.trailingAnchor.constraint(equalTo: view1.trailingAnchor, constant: 10),
+    view3.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+    view3.heightAnchor.constraint(equalTo: view1.heightAnchor, multiplier: 0.5),
+    view3.widthAnchor.constraint(equalTo: view1.widthAnchor, multiplier: 0.5),
+    NSLayoutConstraint(item: view3, attribute: .centerX, 
+                        relatedBy: .equal, toItem: view1, 
+                        attribute: .trailing, multiplier: 1/3, constant: 0),
+    view4.trailingAnchor.constraint(equalTo: view3.trailingAnchor, constant: 10),
+    view4.leadingAnchor.constraint(equalTo: view3.leadingAnchor, constant: -10),
+    view4.topAnchor.constraint(equalTo: view2.bottomAnchor, constant: 50),
+    view4.heightAnchor.constraint(equalToConstant: 100),
+])
 ```
 
 Try this instead:
@@ -101,17 +101,17 @@ Try this instead:
 
 
 ```swift
-    Constraints {
-        view.centerXY == view1.centerXY
-        view1.size == 200
-        view2.edges == view1.edges + UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        view3.bottom == view.safeAreaLayoutGuide.bottom
-        view3.size == view1.size / 2
-        view3.centerX == view.trailing / 3
-        view4.horizontalEdges == view3.horizontalEdges + UIEdgeInsets(left: 10, right: 10)
-        view4.top == view2.bottom + 50
-        view4.height == 100
-    }.activate()
+Constraints {
+    view.centerXY == view1.centerXY
+    view1.size == 200
+    view2.edges == view1.edges + UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    view3.bottom == view.safeAreaLayoutGuide.bottom
+    view3.size == view1.size / 2
+    view3.centerX == view.trailing / 3
+    view4.horizontalEdges == view3.horizontalEdges + UIEdgeInsets(left: 10, right: 10)
+    view4.top == view2.bottom + 50
+    view4.height == 100
+}.activate()
 ```
 
 
