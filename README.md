@@ -71,7 +71,7 @@ view.bottom == 4 * button.top + 10
 
 Tired of this?
 
-<img style="float: right;" src="Resources/images/screenshot.png" width="240">
+
 
 ```swift
 NSLayoutConstraint.activate([
@@ -98,17 +98,19 @@ NSLayoutConstraint.activate([
 
 Try this instead:
 
-
+<img style="float: right;" src="Resources/images/screenshot.png" width="100">
 
 ```swift
 Constraints {
     view.centerXY == view1.centerXY
     view1.size == 200
-    view2.edges == view1.edges + UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    view2.edges == view1.edges 
+        + UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     view3.bottom == view.safeAreaLayoutGuide.bottom
     view3.size == view1.size / 2
     view3.centerX == view.trailing / 3
-    view4.horizontalEdges == view3.horizontalEdges + UIEdgeInsets(left: 10, right: 10)
+    view4.horizontalEdges == view3.horizontalEdges 
+        + UIEdgeInsets(left: 10, right: 10)
     view4.top == view2.bottom + 50
     view4.height == 100
 }.activate()
